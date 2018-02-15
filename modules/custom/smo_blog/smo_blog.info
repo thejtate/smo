@@ -1,0 +1,7 @@
+name = Smo Blog
+description = Implement smo blog functionality.
+version = "7.x-1.0"
+core = 7.x
+package = custom
+
+dependencies[] = ctools

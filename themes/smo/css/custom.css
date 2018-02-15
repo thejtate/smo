@@ -1,0 +1,147 @@
+.field-collection-view {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+body.admin-menu .field-collection-view {
+    border-top: 1px dotted #D3D7D9;
+    border-bottom: 1px dotted #D3D7D9;
+}
+
+.field-collection-container {
+    border: none;
+    padding: 0;
+}
+
+body.admin-menu .field-collection-container {
+    border-bottom: 1px solid #D3D7D9;
+}
+#block-views-calendar-block-1 .contextual-links-wrapper {
+    right: 30px;
+}
+
+.front .calendar-wrapper .smo-calendar-views-month-wrapper {
+    display: none;
+}
+.front .calendar-wrapper.more-days-clicked .smo-calendar-views-month-wrapper {
+    display: block;
+}
+
+/* Page with image block */
+.page-page-image-block .field-collection-container,
+.page-page-image-block .field-collection-view {
+    margin: 0px;
+    padding: 0;
+    border: none;
+}
+
+.page-page-image-block .field-collection-view ul.field-collection-view-links {
+    margin-top: 0px;
+}
+
+.page-page-image-block .field-collection-container,
+.page-page-image-block .field-collection-container .field-item {
+    margin-bottom: 0;
+}
+
+.page-page-image-block .field-collection-view ul.field-collection-view-links {
+    margin-bottom: 20px;
+    float: none !important;
+    margin: 0 auto 20px;
+    width: 100px;
+}
+
+.page-page-image-block ul.field-collection-view-links li {
+    float: left;
+    margin-left: 5px;
+}
+
+.page-page-image-block ul.field-collection-view-links li a {
+    padding: 2px 5px;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-right: 0;
+}
+
+.page-page-image-block .field-collection-view-links li a {
+    color: #333;
+    border-style: solid solid solid;
+
+    background-color: #DDD;
+    border-color: #BBB;
+    border-width: 1px;
+    height: auto;
+    display: block;
+    font-size: 15px;
+    margin-right: 0.5em;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.page-page-image-block .action-links-field-collection-add li a {
+    color: #333;
+    border-style: solid solid solid;
+
+    background-color: #DDD;
+    border-color: #BBB;
+    border-width: 1px;
+    height: auto;
+    margin-right: 0.5em;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.page-page-image-block .action-links li {
+    list-style-type: none;
+}
+
+p.smo-museum-hours .days {
+    text-transform: uppercase;
+}
+.page-location p.smo-museum-hours strong {
+    font-weight: normal;
+}
+
+.region-header .block-menu-block  .contextual-links-wrapper {
+    margin-right: 200px;
+}
+
+.desktop .museum-map-page .field-collection-item-field-basic-content-blocks a[href$="png"],
+.desktop .museum-map-page .field-collection-item-field-basic-content-blocks a[href$="jpg"] {
+    cursor: default;
+}
+
+/* Page with image block */
+.node-page-image-block .item h3 a {
+    text-decoration: none;
+}
+
+div[data-role$="not-member-wrap"] {
+    display: none;
+}
+
+/* Blog */
+.block-smo-blog .sidebar .contacts {
+    margin-bottom: 15px;
+}
+
+.node-news figure.image p {
+    margin-bottom: auto;
+}
+/* Sunday Hack */
+@media (max-width: 640px) {
+    .page-node-191 .field-name-field-basic-content-blocks table {
+        width: 100% !important;
+    }
+}
+
+img[src^="https://r.turn.com/"] {
+    position: absolute;
+}
+
+body.page-node-7 .field.field-name-field-basic-content-block-table.field-type-tablefield.field-label-hidden.table-wrapper-p {
+    display: none
+}
+
+

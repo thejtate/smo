@@ -1,0 +1,17 @@
+.group-block-wrap {
+    margin-bottom: 20px;
+}
+
+.group-block-wrap.block-type-columns2 .field-name-field-basic-content-block-col1,
+.group-block-wrap.block-type-columns2 .field-name-field-basic-content-block-col2 {
+    width: 49%;
+    float: left;
+}
+.group-controls .form-wrapper{
+    display: inline-block;
+    margin: auto 10px;
+}
+.form-actions {
+    clear: both;
+}
+/*group-block-wrap*/

@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * smo_custom
+ */
+
+/**
+ * Social settings names. Will be used for settings form and varialbes names.
+ *
+ * @return array
+ */
+function smo_custom_socials_keys() {
+  return array(
+    'facebook', 'twitter', 'pinterest', 'youtube', 'instagram'
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function smo_custom_menu() {
+
+  $items = array();
+  $items['admin/smo/config'] = array(
+    'title' => 'SMO Configuration',
+    'description' => 'SMO Configuration page',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smo_custom_site_settings_form'),
+    'access arguments' => array('administer content site configuration'),
+    'file' => 'includes/smo_custom.form.inc'
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function smo_custom_permission() {
+  return array(
+    'administer content site configuration' => array(
+      'title' => t('Administer main content variables'),
+    ),
+    'edit field_pib_img_blocks_icon' => array(
+      'title' => t('Edit Page with image block icons'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function smo_custom_form_alter(&$form, &$form_state, $form_id) {
+
+  switch($form_id) {
+    case 'homepage_node_form':
+      if(!empty($form['field_home_gallery'])) {
+        $form['field_home_gallery']['#attributes']['class'][] = 'gallery-items';
+        $form['#attached']['js'][] = drupal_get_path('module', 'smo_custom') . '/js/smo_custom_homepage_edit.js';
+      }
+      break;
+    case 'news_node_form':
+      if (isset($form['field_news_type'])) {
+        $form['field_news_type']['#access'] = FALSE;
+      }
+      break;
+  }
+
+  if (strpos( $form_id, '_node_form') !== FALSE && !empty($form['field_sc_live_years'])) {
+    //rename buttons.
+    if (!empty($form['field_sc_live_years'][LANGUAGE_NONE])) {
+      foreach (element_children(
+                 $form['field_sc_live_years'][LANGUAGE_NONE]
+               ) as $child_key) {
+        if (is_numeric($child_key)) {
+          $form['field_sc_live_years'][LANGUAGE_NONE][$child_key]['remove_button']['#value'] = t(
+            'Remove whole section'
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_access().
+ */
+function smo_custom_field_access($op, $field, $entity_type, $entity, $account) {
+  if ($op == 'edit' && !empty($entity) && $field['field_name'] == 'field_pib_img_blocks_icon') {
+    $permission = $op . ' field_pib_img_blocks_icon';
+    return user_access($permission, $account);
+  }
+}

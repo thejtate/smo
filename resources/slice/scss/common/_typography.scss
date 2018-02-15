@@ -1,0 +1,222 @@
+.rteleft {
+  text-align: left;
+}
+
+.rteright {
+  text-align: right;
+
+  .page-node-94 & {
+
+    @media (max-width: $bp-small - 1) {
+      text-align: center;
+    }
+  }
+}
+
+.rtecenter {
+  text-align: center;
+}
+
+.rtejustify {
+  text-align: justify;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.8;
+  color: $color;
+  font-family: $klavikabasic-regular;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  line-height: 1.2;
+  font-family: $klavikabasic-bold;
+}
+
+h1, h2 {
+  font-size: 42px;
+  line-height: 1;
+  margin: 0;
+  font-family: $klavikabasic-medium;
+
+  @media (min-width: $bp-small) {
+    font-size: 58px;
+  }
+
+  @media (min-width: $bp-middle) {
+    font-size: 72px;
+  }
+}
+
+h1 {
+  color: #fff;
+
+  .front & {
+    @include text-hide();
+  }
+}
+
+h3 {
+  font-size: 20px;
+  color: $color;
+  margin: 0 0 16px;
+
+  @media (min-width: $bp-small) {
+    font-size: 26px;
+    margin: 0 0 20px;
+  }
+
+  @media (min-width: $bp-middle) {
+    font-size: 36px;
+    margin: 0 0 28px;
+  }
+}
+
+h4 {
+  font-size: 18px;
+  margin: 0 0 8px;
+
+  .page-location & {
+    font-family: $klavikabasic-regular;
+  }
+
+  @media (min-width: $bp-small) {
+    font-size: 24px;
+  }
+}
+
+h5 {
+  font-size: 16px;
+  margin: 0;
+
+  @media (min-width: $bp-small) {
+    font-size: 18px;
+  }
+
+  @media (min-width: $bp-middle) {
+    font-size: 20px;
+  }
+}
+
+h6 {
+  font-size: 14px;
+  margin: 0 0 12px;
+
+  @media (min-width: $bp-small) {
+    margin: 0 0 20px;
+  }
+
+  @media (min-width: $bp-middle) {
+    margin: 0 0 30px;
+  }
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0 0 0 16px;
+
+  &.list-style {
+    list-style: none;
+    padding: 0;
+    counter-reset: li;
+
+    li {
+      margin-bottom: 15px;
+      position: relative;
+      text-indent: 24px;
+
+      &:before {
+        position: absolute;
+        top: -5px;
+        left: -14px;
+        content: counter(li);
+        counter-increment: li;
+        font-size: 18px;
+        font-family: $klavikabasic-bold;
+        color: #fff;
+        background: image-url('bg/icon-list.png') no-repeat;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        text-indent: 3px;
+      }
+    }
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+a {
+  color: $color;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.link-download {
+    font-family: $klavikabasic-bold;
+    padding-left: 30px;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    @include transition(color .3s);
+
+    &:hover {
+      color: $color-b;
+    }
+
+    &:before {
+      @include pseudo-block($left: 0, $top: -1px);
+      @include oneline-sprite-box($icons, icon-download-a);
+    }
+  }
+}
+
+.text-x-large {
+  line-height: 1.6;
+  font-size: 16px;
+
+  @media (min-width: $bp-small) {
+    font-size: 18px;
+  }
+
+  @media (min-width: $bp-middle) {
+    font-size: 24px;
+  }
+}
+
+.text-large {
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+blockquote {
+  margin: 0 0 20px 30px;
+  padding: 12px 0 0 50px;
+  position: relative;
+
+  @media (min-width: $bp-small) {
+    margin: 0 0 50px;
+  }
+
+  &:before {
+    @include pseudo-block($left: 0, $top: 0);
+    content: '“';
+    font-family: SSSymbolicons;
+    color: $color-a;
+    font-size: 24px;
+  }
+}

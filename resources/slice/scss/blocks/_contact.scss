@@ -1,0 +1,17 @@
+.b-contact {
+  max-width: 380px;
+  margin: 0 auto;
+  text-align: center;
+
+  .item {
+    margin-bottom: 10px;
+
+    @media (min-width: $bp-small) {
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: $bp-middle) {
+      margin-bottom: 30px;
+    }
+  }
+}

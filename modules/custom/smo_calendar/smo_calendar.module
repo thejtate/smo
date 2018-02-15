@@ -1,0 +1,431 @@
+<?php
+
+/**
+ * @file
+ * smo_calendar_calendar
+ */
+define('SMO_MUSEUM_HOURS_BEAN_ID', 'none');
+
+/**
+ * Implements hook_menu().
+ */
+function smo_calendar_menu() {
+  $items = array();
+
+  $items['calendar/day/%/%ctools_js'] = array(
+    'title' => 'Title',
+    'description' => 'Description',
+    'access callback' => TRUE,
+    'page callback' => 'smo_calendar_load_calendar_day',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'delivery callback' => 'ajax_deliver',
+  );
+
+  $items['omn-calendar/day/%/%ctools_js'] = array(
+    'title' => 'Title',
+    'description' => 'Description',
+    'access callback' => TRUE,
+    'page callback' => 'smo_calendar_load_omn_calendar_day',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'delivery callback' => 'ajax_deliver',
+  );
+
+  $items['admin/config/smo-calendar'] = array(
+    'title' => t('Calendar'),
+    'position' => 'right',
+    'weight' => -5,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('access administration pages'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  $items['admin/config/smo-calendar/settings'] = array(
+    'title' => t('Calendar Settings'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smo_calendar_admin_settings'),
+    'access arguments' => array('access to smo calendar settings'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'smo_calendar.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function smo_calendar_permission(){
+  return array(
+    'access to smo calendar settings' => array(
+      'title' => t('Access to calendar settings'),
+      'description' => t('Access to calendar settings on site.'),
+    ),
+  );
+}
+
+/**
+ * Page ajax callback.
+ *
+ * @param $date
+ * @param null $js
+ */
+function smo_calendar_load_calendar_day($date, $js = NULL) {
+
+  if($js) {
+
+    $commands = array();
+
+    $date_obj = date_create_from_format('Y-m-d', $date);
+    if(!empty($date_obj)) {
+      //if valid date
+      $html = views_embed_view('calendar', 'block_3', $date);
+      $commands[] = ajax_command_invoke('.smo-calendar-views-month-wrapper', 'hide');
+      $commands[] = ajax_command_replace('.smo-calendar-views-day-wrapper', $html);
+      $commands[] = array(
+        'command' => 'smoCalendarSetDate', // Custom ajax command. @see smo_calendar.js
+        'id'  => 'calendar-' . $date,
+        'cells_selector' => '.smo-calendar-views-month-wrapper td',
+      );
+      $commands[] = ajax_command_invoke('.smo-calendar-views-day-wrapper', 'addClass', array('show-events'));
+    }
+
+    return array(
+      '#type' => 'ajax',
+      '#commands' => $commands,
+    );
+
+  } else {
+    drupal_goto();
+  }
+}
+
+/**
+ * Page ajax callback.
+ *
+ * @param $date
+ * @param null $js
+ */
+function smo_calendar_load_omn_calendar_day($date, $js = NULL) {
+  if($js) {
+
+    $commands = array();
+
+    $date_obj = date_create_from_format('Y-m-d', $date);
+    if(!empty($date_obj)) {
+      //if valid date
+      $html = views_embed_view('omn_calendar', 'block_3', $date);
+      $commands[] = array(
+        'command' => 'smoCalendarSetDate', // Custom ajax command. @see smo_calendar.js
+        'id'  => 'omn_calendar-' . $date,
+        'cells_selector' => '.smo-omn-calendar-views-month-wrapper td',
+      );
+      $commands[] = ajax_command_replace('.smo-omn-calendar-views-day-wrapper', $html);
+    }
+
+    return array(
+      '#type' => 'ajax',
+      '#commands' => $commands,
+    );
+
+  } else {
+    drupal_goto();
+  }
+}
+
+/**
+ * Implements theme_date_all_day_label().
+ */
+function smo_calendar_date_all_day_label() {
+  return t('All Day', array(), array('context' => 'datetime'));
+}
+
+function smo_calendar_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+
+  if($view->name = 'calendar' && $view->current_display == 'block_1') {
+    $vars['classes_array'][] = 'smo-calendar-views-month-wrapper';
+  }
+
+  if($view->name = 'calendar' && $view->current_display == 'block_3') {
+
+    $vars['classes_array'][] = 'smo-calendar-views-day-wrapper';
+
+    drupal_add_library('system', 'drupal.ajax');
+    drupal_add_js(drupal_get_path('module', 'smo_calendar') . '/js/smo_calendar.js');
+
+    $date_arg = $view->args[0];
+    $date_arg_obj = new DateObject($date_arg);
+    $now_date_obj = new DateObject();
+    if($now_date_obj->format('Y-m-d') == $date_arg) {
+      $vars['is_today'] = TRUE;
+    }
+
+    $holidays = _smo_calendar_get_holidays();
+    if (in_array($date_arg, $holidays)) {
+      $vars['is_holiday'] = TRUE;
+    }
+
+    $vars['formatted_date'] = $date_arg_obj->format('F d, Y');
+  }
+
+  if ($view->name = 'omn_calendar') {
+    if($view->current_display == 'block_1') {
+      $vars['classes_array'][] = 'smo-omn-calendar-views-month-wrapper';
+    } else if ($view->current_display == 'block_3') {
+      $vars['classes_array'][] = 'smo-omn-calendar-views-day-wrapper';
+
+      drupal_add_library('system', 'drupal.ajax');
+      drupal_add_js(drupal_get_path('module', 'smo_calendar') . '/js/smo_calendar.js');
+
+      $date_arg = $view->args[0];
+      $date_arg_obj = new DateObject($date_arg);
+      $vars['formatted_date'] = $date_arg_obj->format('l, F d');
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_unformatted().
+ */
+function smo_calendar_preprocess_views_view_unformatted(&$vars) {
+  //dsm($vars);
+  $view = $vars['view'];
+
+  if($view->name = 'calendar' && $view->current_display == 'block_3') {
+    $date_arg = $view->args[0];
+    $date_arg_obj = new DateObject($date_arg);
+    $day_of_week_number = $date_arg_obj->format('w');
+    $vars['close_time'] = smo_calendar_week_day_close_hours($day_of_week_number);
+
+    $vars['events_after_close'] = _smo_calendar_get_events_after_close_time($date_arg, $vars['close_time']);
+  }
+}
+
+/**
+ * Implements template_preprocess_calendar_datebox().
+ * Events Calendar
+ */
+function smo_calendar_preprocess_calendar_datebox(&$vars) {
+  if(!empty($vars['view']->name)) {
+
+    switch($vars['view']->name){
+      case 'calendar':
+        if ($vars['mini']) {
+          if (!empty($vars['selected'])) {
+            $link_attributes = array('class' => array('calendar-active-day', 'use-ajax'));
+            $vars['link'] = l($vars['day'], 'calendar/day/' . $vars['date'] . '/nojs', array('attributes' => $link_attributes));
+          }
+        }
+        break;
+      case 'omn_calendar':
+        if ($vars['mini']) {
+          if (!empty($vars['selected'])) {
+            $link_attributes = array('class' => array('calendar-active-day', 'use-ajax'));
+            $vars['link'] = l($vars['day'], 'omn-calendar/day/' . $vars['date'] . '/nojs', array('attributes' => $link_attributes));
+          }
+        }
+        break;
+    }
+
+  }
+
+}
+
+/**
+ * Return Smo close hours string in format (9:00 am) for given day of week
+ *
+ * @param int $day_number day of week from 0 to 6
+ */
+function smo_calendar_week_day_close_hours($day_number) {
+  $bean = bean_load(SMO_MUSEUM_HOURS_BEAN_ID);
+  $result = '';
+  if (!empty($bean->field_museum_hours[LANGUAGE_NONE][$day_number]['endhours'])) {
+    $result = _office_hours_time_format($bean->field_museum_hours[LANGUAGE_NONE][$day_number]['endhours'], 'g:i a');
+  }
+  return $result;
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function smo_calendar_token_info() {
+  $info = array();
+
+  $info['types']['smo_calendar'] = array(
+    'name' => t('Museum hours'),
+    'description' => t('Museum hours'),
+    //'needs-data' => '',
+  );
+
+  //hook_token_info_item_types
+  $info['tokens']['smo_calendar']['museum_hours'] = array(
+    'type' => 'text',
+    'name' => t('Museum hours'),
+    'description' => t('Museum hours'),
+  );
+
+  //hook_token_info_item_tokens
+
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function smo_calendar_tokens(
+  $type,
+  $tokens,
+  array $data = array(),
+  array $options = array()
+) {
+  $return = array();
+  if ($type == 'smo_calendar') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'museum_hours':
+          $bean = bean_load(SMO_MUSEUM_HOURS_BEAN_ID);
+          $field = field_view_field('bean', $bean, 'field_museum_hours', 'token');
+          $return[$original] = !empty($field) ? drupal_render($field) : '';
+          break;
+
+      }
+    }
+  }
+
+  return $return;
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function smo_calendar_node_presave($node) {
+
+  if($node->type == 'event') {
+
+    if(!empty($node->field_event_date[LANGUAGE_NONE])) {
+
+      //Remove dates entered in field_event_exclude_dates
+      if(!empty($node->field_event_exclude_dates[LANGUAGE_NONE])) {
+        foreach ($node->field_event_exclude_dates[LANGUAGE_NONE] as $field_event_exclude_date) {
+
+          $exclude_date = str_replace(' 00:00:00', '', $field_event_exclude_date['value']);
+          $timezone = $field_event_exclude_date['timezone'];
+
+          foreach ($node->field_event_date[LANGUAGE_NONE] as $delta => $item) {
+            $date = new dateObject($item['value'], $timezone);
+            if($date->format(DATE_FORMAT_DATE) == $exclude_date) {
+              unset($node->field_event_date[LANGUAGE_NONE][$delta]);
+            }
+          }
+        }
+      }
+
+
+      //Add new dates with time from field field_event_additional_time
+      if(!empty($node->field_event_additional_time[LANGUAGE_NONE])) {
+
+        $db_timezone = new DateTimeZone(date_get_timezone_db('utc'));
+
+        $additional_dates = array();
+        foreach ($node->field_event_additional_time[LANGUAGE_NONE] as $time) {
+          if(isset($time['value'])) {
+
+            $value = $time['value'];
+            if ($value >= 86400) {
+              $value = $value - 86400;
+            }
+
+            $additional_time_obj = new dateObject(mktime(0, 0, $value));
+            $additional_time_hour = $additional_time_obj->format('H');
+            $additional_time_min = $additional_time_obj->format('i');
+
+            foreach ($node->field_event_date[LANGUAGE_NONE] as $delta => $item) {
+              $timezone = $item['timezone'];
+              $date = new dateObject($item['value'], $timezone);
+              $date->setTime($additional_time_hour, $additional_time_min);
+//              $date->setTimezone($db_timezone);
+              $item['value'] = $date->format(DATE_FORMAT_DATETIME);
+              $item['value2'] = $item['value'];
+
+              $additional_dates[] = $item;
+            }
+          }
+        }
+
+        $node->field_event_date[LANGUAGE_NONE] = array_merge($node->field_event_date[LANGUAGE_NONE], $additional_dates);
+      }
+    }
+
+    $node->field_event_date[LANGUAGE_NONE] = array_values($node->field_event_date[LANGUAGE_NONE]);//fix delta order
+  } else if($node->type == 'omn_event') {
+
+    if (!empty($node->field_omn_event_date[LANGUAGE_NONE])) {
+
+      //Remove dates entered in field_omn_event_exclude_dates
+      if (!empty($node->field_omn_event_exclude_dates[LANGUAGE_NONE])) {
+        foreach ($node->field_omn_event_exclude_dates[LANGUAGE_NONE] as $field_omn_event_exclude_date) {
+
+          $exclude_date = str_replace(' 00:00:00', '', $field_omn_event_exclude_date['value']);
+          $timezone = $field_omn_event_exclude_date['timezone'];
+
+          foreach ($node->field_omn_event_date[LANGUAGE_NONE] as $delta => $item) {
+            $date = new dateObject($item['value'], $timezone);
+            if ($date->format(DATE_FORMAT_DATE) == $exclude_date) {
+              unset($node->field_omn_event_date[LANGUAGE_NONE][$delta]);
+            }
+          }
+        }
+        $node->field_omn_event_date[LANGUAGE_NONE] = array_values($node->field_omn_event_date[LANGUAGE_NONE]);
+      }
+    }
+  }
+
+}
+
+/**
+ * Get holidays.
+ */
+function _smo_calendar_get_holidays() {
+  $num_days = variable_get('smo_calendar_holidays_num_days', 0);
+  $holidays = array();
+  for ($i = 1; $i <= $num_days; $i++) {
+    $day = variable_get('smo_calendar_holidays_' . $i, 0);
+    if ($day) {
+      $holidays[] = $day;
+    }
+  }
+
+  return $holidays;
+}
+
+/**
+ * Get amount of events after close time.
+ *
+ * @param $date_arg
+ * @param $close_time
+ */
+function _smo_calendar_get_events_after_close_time($date_arg, $close_time) {
+
+  if ($close_time) {
+    $close_time = strtotime($close_time);
+    $close_time = date('H:i', $close_time);
+  }
+
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_event_date', 'date', 'date.entity_id = n.nid');
+  $query->fields('n', array('nid', 'title'))
+    ->fields('date', array('field_event_date_value'))
+    ->condition('date.entity_type', 'node')
+    ->condition('n.status', 1)
+    ->condition('n.type', 'event');
+  $query->where("DATE_FORMAT(date.field_event_date_value, '%Y-%m-%d') = :date_arg", array(':date_arg' => $date_arg));
+  $query->where("DATE_FORMAT(date.field_event_date_value, '%H:%i') >= :close_time", array(':close_time' => $close_time));
+
+  $result = $query->countQuery()
+    ->execute()
+    ->fetchField();
+
+  return $result;
+}

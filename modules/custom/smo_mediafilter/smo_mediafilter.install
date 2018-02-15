@@ -1,0 +1,53 @@
+<?php
+/**
+ * SMO media filter.
+ */
+?>
+
+<?php
+/**
+ * Implements hook_install().
+ */
+function smo_mediafilter_install() {
+  $weight = db_select('system', 's')
+    ->fields('s', array('weight'))
+    ->condition('name', 'media_browser_plus', '=')
+    ->execute()
+    ->fetchField();
+
+  db_update('system')
+    ->fields(array('weight' => $weight + 1))
+    ->condition('name', 'smo_mediafilter', '=')
+    ->execute();
+}
+
+/**
+ * Implements hook_enable().
+ *
+ * Ensure the necessary structures exist.
+ */
+function smo_mediafilter_enable() {
+  $vocabulary = taxonomy_vocabulary_machine_name_load('media_folders');
+  $parent = taxonomy_term_load(variable_get('media_browser_plus_root_folder_tid'));
+
+  if ($vocabulary && $parent) {
+    $root_folder = taxonomy_term_load(variable_get('smo_mediafilter_home_gallery_folder_tid'));
+    if ($root_folder === FALSE) {
+      $root_folder = new stdClass();
+      $root_folder->name = 'Home Gallery';
+      $root_folder->description = 'SMO mediafilter Home Gallery folder';
+      $root_folder->vid = $vocabulary->vid;
+      $root_folder->weight = '-10';
+      $root_folder->parent = $parent->tid;
+      taxonomy_term_save($root_folder);
+      variable_set('smo_mediafilter_home_gallery_folder_tid', $root_folder->tid);
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function smo_mediafilter_uninstall() {
+  variable_del('smo_mediafilter_home_gallery_folder_tid');
+}

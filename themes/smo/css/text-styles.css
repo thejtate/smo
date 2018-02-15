@@ -1,0 +1,1073 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'SSSocialRegular';
+  src: url("../fonts/ss-social-regular.eot");
+  src: url("../fonts/ss-social-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/ss-social-regular.woff") format("woff"), url("../fonts/ss-social-regular.ttf") format("truetype"), url("../fonts/ss-social-regular.svg#SSSocialRegular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SSSymbolicons';
+  src: url("../fonts/ss-symbolicons-block.eot");
+  src: url("../fonts/ss-symbolicons-block.eot?#iefix") format("embedded-opentype"), url("../fonts/ss-symbolicons-block.woff") format("woff"), url("../fonts/ss-symbolicons-block.ttf") format("truetype"), url("../fonts/ss-symbolicons-block.svg#SSSymboliconsBlock") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'klavikabasic-medium';
+  src: url("../fonts/klavikabasic-medium-webfont.eot");
+  src: url("../fonts/klavikabasic-medium-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/klavikabasic-medium-webfont.woff") format("woff"), url("../fonts/klavikabasic-medium-webfont.ttf") format("truetype"), url("../fonts/klavikabasic-medium-webfont.svg#klavikabasic-medium") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'klavikabasic-regular';
+  src: url("../fonts/klavikabasic-regular-webfont.eot");
+  src: url("../fonts/klavikabasic-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/klavikabasic-regular-webfont.woff") format("woff"), url("../fonts/klavikabasic-regular-webfont.ttf") format("truetype"), url("../fonts/klavikabasic-regular-webfont.svg#klavikabasic-regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'klavika-light';
+  src: url("../fonts/klavika-light-webfont.eot");
+  src: url("../fonts/klavika-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/klavika-light-webfont.woff") format("woff"), url("../fonts/klavika-light-webfont.woff2") format("woff2"), url("../fonts/klavika-light-webfont.ttf") format("truetype"), url("../fonts/klavika-light-webfont.svg#klavika-light") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'klavikabasic-bold';
+  src: url("../fonts/klavikabasic-bold-webfont.eot");
+  src: url("../fonts/klavikabasic-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/klavikabasic-bold-webfont.woff") format("woff"), url("../fonts/klavikabasic-bold-webfont.ttf") format("truetype"), url("../fonts/klavikabasic-bold-webfont.svg#klavikabasic-bold") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background: transparent;
+}
+
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+a:focus {
+  outline: thin dotted;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+pre {
+  white-space: pre-wrap;
+}
+
+/**
+ * Set consistent quote types.
+ */
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+figure {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+button,
+input {
+  line-height: normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rteleft {
+  text-align: left;
+}
+
+.rteright {
+  text-align: right;
+}
+@media (max-width: 767px) {
+  .page-node-94 .rteright {
+    text-align: center;
+  }
+}
+
+.rtecenter {
+  text-align: center;
+}
+
+.rtejustify {
+  text-align: justify;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #555555;
+  font-family: klavikabasic-regular;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  line-height: 1.2;
+  font-family: klavikabasic-bold;
+}
+
+h1, h2 {
+  font-size: 42px;
+  line-height: 1;
+  margin: 0;
+  font-family: klavikabasic-medium;
+}
+@media (min-width: 768px) {
+  h1, h2 {
+    font-size: 58px;
+  }
+}
+@media (min-width: 992px) {
+  h1, h2 {
+    font-size: 72px;
+  }
+}
+
+h1 {
+  color: #fff;
+}
+.front h1 {
+  text-indent: -9999px;
+  font-size: 0;
+  line-height: 0;
+}
+
+h3 {
+  font-size: 20px;
+  color: #555555;
+  margin: 0 0 16px;
+}
+@media (min-width: 768px) {
+  h3 {
+    font-size: 26px;
+    margin: 0 0 20px;
+  }
+}
+@media (min-width: 992px) {
+  h3 {
+    font-size: 36px;
+    margin: 0 0 28px;
+  }
+}
+
+h4 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+.page-location h4 {
+  font-family: klavikabasic-regular;
+}
+@media (min-width: 768px) {
+  h4 {
+    font-size: 24px;
+  }
+}
+
+h5 {
+  font-size: 16px;
+  margin: 0;
+}
+@media (min-width: 768px) {
+  h5 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 992px) {
+  h5 {
+    font-size: 20px;
+  }
+}
+
+h6 {
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+@media (min-width: 768px) {
+  h6 {
+    margin: 0 0 20px;
+  }
+}
+@media (min-width: 992px) {
+  h6 {
+    margin: 0 0 30px;
+  }
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0 0 0 16px;
+}
+ul.list-style, ol.list-style {
+  list-style: none;
+  padding: 0;
+  counter-reset: li;
+}
+ul.list-style li, ol.list-style li {
+  margin-bottom: 15px;
+  position: relative;
+  text-indent: 24px;
+}
+ul.list-style li:before, ol.list-style li:before {
+  position: absolute;
+  top: -5px;
+  left: -14px;
+  content: counter(li);
+  counter-increment: li;
+  font-size: 18px;
+  font-family: klavikabasic-bold;
+  color: #fff;
+  background: url('../images/bg/icon-list.png') no-repeat;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  text-indent: 3px;
+}
+ul li, ol li {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #555555;
+}
+a:hover {
+  text-decoration: none;
+}
+a.link-download {
+  font-family: klavikabasic-bold;
+  padding-left: 30px;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+a.link-download:hover {
+  color: #056d9b;
+}
+a.link-download:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: 19px;
+  width: 16px;
+  background:  url('../images/icons-s47b43c8ea2.png') -24px -51px no-repeat;
+}
+
+.text-x-large {
+  line-height: 1.6;
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  .text-x-large {
+    font-size: 18px;
+  }
+}
+@media (min-width: 992px) {
+  .text-x-large {
+    font-size: 24px;
+  }
+}
+
+.text-large {
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+blockquote {
+  margin: 0 0 20px 30px;
+  padding: 12px 0 0 50px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  blockquote {
+    margin: 0 0 50px;
+  }
+}
+blockquote:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: 'тАЬ';
+  font-family: SSSymbolicons;
+  color: #39b4e9;
+  font-size: 24px;
+}
+
+.btn {
+  background: #ff7200;
+  color: #fff;
+  -moz-transition: background 0.4s;
+  -o-transition: background 0.4s;
+  -webkit-transition: background 0.4s;
+  transition: background 0.4s;
+  border: none;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: klavikabasic-bold;
+  padding: 11px 16px;
+  text-decoration: none;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top;
+}
+.btn:hover {
+  background: #f9b532;
+}
+.page-node-6 .btn {
+  margin-bottom: 4px;
+}
+@media (min-width: 768px) {
+  .page-node-6 .btn {
+    margin-bottom: 0;
+  }
+}
+.btn.style-big {
+  padding: 12px 22px;
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  .btn.style-big {
+    padding: 12px 26px;
+    font-size: 26px;
+  }
+}
+@media (min-width: 992px) {
+  .btn.style-big {
+    padding: 16px 32px;
+    font-size: 30px;
+  }
+}
+.btn.style-purple {
+  background: #553670;
+}
+.btn.style-purple:hover {
+  background: #784d9e;
+}
+.btn.style-blue {
+  background: #2b87af;
+}
+.btn.style-blue:hover {
+  background: #056d9b;
+}
+.btn.style-cerulean {
+  background: #39b4e9;
+}
+.btn.style-cerulean:hover {
+  background: #056d9b;
+}
+.btn.type-download {
+  min-width: 280px;
+  padding: 19px 25px 19px 60px;
+  text-transform: none;
+  position: relative;
+  text-align: left;
+}
+.btn.type-download:before {
+  height: 21px;
+  width: 16px;
+  background:  url('../images/icons-s47b43c8ea2.png') 0 -125px no-repeat;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+.page-node-94 .btn.type-download {
+  width: 288px;
+}
+@media (min-width: 768px) {
+  .page-node-94 .btn.type-download {
+    min-width: 380px;
+  }
+}
+
+.b-with-bg {
+  position: relative;
+  z-index: 1;
+  padding: 30px 0;
+}
+@media (min-width: 768px) {
+  .b-with-bg {
+    padding: 40px 0;
+  }
+}
+@media (min-width: 992px) {
+  .b-with-bg {
+    padding: 50px 0;
+  }
+}
+.page-faq .b-with-bg {
+  padding: 40px 0;
+  margin-bottom: 22px;
+}
+@media (min-width: 768px) {
+  .page-faq .b-with-bg {
+    padding: 80px 0;
+    margin-bottom: 52px;
+  }
+}
+.b-with-bg.editor {
+  padding: 0;
+}
+.b-with-bg.editor:before {
+  display: none;
+}
+.b-with-bg:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  position: absolute;
+  width: 4000px;
+  margin-left: -2000px;
+  z-index: -1;
+}
+.b-with-bg.style-gray {
+  background: #e8e8e8;
+}
+.b-with-bg.style-gray:before {
+  background: #e8e8e8;
+}
+.b-with-bg.style-purple, .b-with-bg.style-blue {
+  color: #fff;
+}
+.b-with-bg.style-purple *, .b-with-bg.style-blue * {
+  color: #fff;
+}
+.b-with-bg.style-purple {
+  background: #553670;
+}
+.b-with-bg.style-purple:before {
+  background: #553670;
+}
+.b-with-bg.style-blue {
+  background: #056d9b;
+}
+.b-with-bg.style-blue:before {
+  background: #056d9b;
+}
+.b-with-bg div.cols {
+  margin-bottom: 0;
+}
+.b-with-bg div.cols.cols-2 .col {
+  padding-top: 0;
+}
+
+table.style-a thead, table.style-a tbody {
+  border: 1px white solid !important;
+  color: white !important;
+  text-align: left;
+}
+table.style-a thead strong, table.style-a tbody strong {
+  font-size: 19px;
+}
+table.style-a thead td:first-child, table.style-a tbody td:first-child {
+  padding: 10px !important;
+  background: #39b4e9;
+}
+table.style-a thead td, table.style-a tbody td {
+  padding: 5px;
+  vertical-align: top;
+  background: #056d9b;
+  font-family: klavikabasic-regular;
+  text-align: left;
+}
+@media (min-width: 768px) {
+  table.style-a thead td, table.style-a tbody td {
+    padding: 10px;
+  }
+}
+
+.table-wrapper {
+  overflow-x: scroll;
+}
+@media (min-width: 768px) {
+  .table-wrapper {
+    overflow-x: visible;
+  }
+}
+
+.b-table.style-e *, .b-table.style-f * {
+  color: #188eb0;
+}
+.b-table.style-e th, .b-table.style-e td, .b-table.style-f th, .b-table.style-f td {
+  border: 1px solid #b7b7b7;
+  font-size: 14px;
+}
+.b-table.style-e th:first-child, .b-table.style-e td:first-child, .b-table.style-f th:first-child, .b-table.style-f td:first-child {
+  border-left: 1px solid #b7b7b7;
+}
+.b-table.style-e {
+  min-width: 730px;
+}
+.b-table.style-e + h3 {
+  margin: 0 0 20px;
+}
+@media (min-width: 768px) {
+  .b-table.style-e + h3 {
+    margin: 0 0 36px;
+  }
+}
+@media (min-width: 992px) {
+  .b-table.style-e + h3 {
+    margin: 0 0 65px;
+  }
+}
+.b-table.style-e thead tr:nth-child(2), .b-table.style-e tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}
+.b-table.style-e thead tr:first-child th {
+  padding: 10px;
+}
+@media (min-width: 768px) {
+  .b-table.style-e thead tr:first-child th {
+    padding: 25px 10px;
+  }
+}
+.b-table.style-e thead tr:first-child th:first-child {
+  width: 130px;
+}
+@media (min-width: 992px) {
+  .b-table.style-e thead tr:first-child th:first-child {
+    width: 245px;
+  }
+}
+.b-table.style-e thead tr:first-child th:nth-child(2) {
+  width: 140px;
+}
+@media (min-width: 992px) {
+  .b-table.style-e thead tr:first-child th:nth-child(2) {
+    width: 175px;
+  }
+}
+.b-table.style-e thead tr:first-child th:nth-child(3) {
+  width: 135px;
+}
+.b-table.style-e td {
+  padding: 10px 5px;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .b-table.style-e td {
+    padding: 20px 8px;
+  }
+}
+.b-table.style-e td:nth-child(n+4) {
+  font-size: 28px;
+  line-height: 1;
+}
+.b-table.style-f {
+  text-align: left;
+  max-width: 510px;
+  margin: 0 auto 20px;
+}
+@media (min-width: 768px) {
+  .b-table.style-f {
+    margin: 0 auto 35px;
+  }
+}
+@media (min-width: 992px) {
+  .b-table.style-f {
+    margin: 0 auto 65px;
+  }
+}
+.b-table.style-f td:first-child {
+  width: 360px;
+}
+.b-table.style-f td:last-child {
+  background: #f2f2f2;
+}
+.b-table.style-g {
+  text-align: center;
+  width: 100%;
+  margin: 20px 0;
+}
+@media (min-width: 768px) {
+  .b-table.style-g {
+    margin: 40px 0;
+  }
+}
+.b-table.style-g thead {
+  font-size: 20px;
+}
+@media (min-width: 768px) {
+  .b-table.style-g thead {
+    font-size: 24px;
+  }
+}
+.b-table.style-g thead td {
+  border: 1px solid #e1e1e1;
+}
+@media (min-width: 768px) {
+  .b-table.style-g thead td {
+    padding: 12px 20px;
+  }
+}
+.b-table.style-g thead a:before {
+  bottom: 5px;
+}
+@media (min-width: 768px) {
+  .b-table.style-g thead a:before {
+    bottom: 7px;
+  }
+}
+.b-table.style-g thead a:after {
+  bottom: 10px;
+}
+@media (min-width: 768px) {
+  .b-table.style-g thead a:after {
+    bottom: 12px;
+  }
+}
+.b-table.style-g tbody {
+  border: 1px solid #e1e1e1;
+  font-family: klavikabasic-regular;
+}
+.b-table.style-g tbody tr:first-child td {
+  padding-top: 20px;
+}
+@media (min-width: 768px) {
+  .b-table.style-g tbody tr:first-child td {
+    padding-top: 30px;
+  }
+}
+.b-table.style-g tbody tr:last-child td {
+  padding-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .b-table.style-g tbody tr:last-child td {
+    padding-bottom: 30px;
+  }
+}
+.b-table.style-g tbody tr td {
+  padding: 6px 10px;
+}
+@media (min-width: 768px) {
+  .b-table.style-g tbody tr td {
+    padding: 6px 20px;
+  }
+}
+.b-table.style-g tbody a:before {
+  bottom: 0;
+}
+.b-table.style-g tbody a:after {
+  bottom: 5px;
+}
+.b-table.style-g a {
+  text-decoration: none;
+  position: relative;
+  padding-right: 24px;
+}
+.b-table.style-g a:hover:before {
+  background: #ff8e29;
+}
+.b-table.style-g a:before {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fbb806;
+  -moz-transition: background 0.3s;
+  -o-transition: background 0.3s;
+  -webkit-transition: background 0.3s;
+  transition: background 0.3s;
+}
+.b-table.style-g a:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  margin-top: -3px;
+}
+
+figure.caption-left figcaption {
+  text-align: left;
+}
+
+figure.caption-center figcaption {
+  text-align: center;
+}
+
+figure.caption-right figcaption {
+  text-align: right;
+}

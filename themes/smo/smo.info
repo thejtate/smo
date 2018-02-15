@@ -1,0 +1,29 @@
+name = SMO main theme
+description = Custom theme for SMO.
+package = SMO
+version = VERSION
+core = 7.x
+
+stylesheets[all][] = css/styles.css
+stylesheets[all][] = css/text-styles.css
+stylesheets[all][] = css/custom.css
+
+scripts[] = js/js.js
+scripts[] = js/lib/device.min.js
+scripts[] = js/lib/select2.full.min.js
+scripts[] = js/lib/jquery.flexslider-min.js
+scripts[] = js/lib/jquery.simplr.smoothscroll.min.js
+scripts[] = js/lib/jquery.scrollbar.js
+;scripts[] = js/lib/ss-social.js
+;scripts[] = js/lib/ss-symbolicons.js
+scripts[] = js/custom.js
+
+regions[top_header] = Top Header
+regions[header] = Header
+regions[after_header] = After Header
+regions[content_top] = Top Content
+regions[content] = Content
+regions[content_bottom] = Content bottom
+regions[top_footer] = Top Footer
+regions[footer] = Footer
+

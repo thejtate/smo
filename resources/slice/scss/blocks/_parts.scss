@@ -1,0 +1,60 @@
+.b-parts {
+  @include clearfix();
+
+  .left-part {
+    float: left;
+    width: 380px;
+    margin-right: 40px;
+  }
+
+  .right-part {
+    overflow: hidden;
+  }
+
+  .item {
+    margin-bottom: 50px;
+  }
+
+  .inner-item {
+    margin-top: 30px;
+  }
+
+  .date {
+    font-style: italic;
+  }
+
+  .total {
+    margin-top: 30px;
+    margin-bottom: 17px;
+    text-align: right;
+    font-size: 20px;
+    font-family: $klavikabasic-medium;
+    padding: 12px 0;
+    text-transform: uppercase;
+    border-top: 1px solid $color-a;
+    border-bottom: 1px solid $color-a;
+  }
+
+  h3 {
+    font-size: 30px;
+    font-family: $klavikabasic-medium;
+    margin: 36px 0;
+    text-transform: uppercase;
+  }
+
+  .desc, .btns-wrap {
+    margin-top: 26px;
+  }
+
+  .desc {
+    padding-top: 13px;
+    float: left;
+    color: #ff0000;
+    font-size: 20px;
+    font-family: $klavikabasic-medium;
+  }
+
+  .btns-wrap {
+    float: right;
+  }
+}

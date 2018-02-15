@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * SMO ckeditor
+ */
+
+/**
+ * Implements hook_page_build().
+ */
+function smo_ckeditor_page_build(&$page) {
+  if(!empty($page['page_bottom']['ckeditor'])) {
+    $page['page_bottom']['ckeditor']['#attached']['css'] = array(
+      drupal_get_path('module', 'smo_ckeditor') . '/css/smo_ckeditor.editor.css' => array(
+        'every_page' => TRUE,
+      ),
+    );
+  }
+}

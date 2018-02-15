@@ -1,0 +1,20 @@
+Index: trunk/sites/all/modules/contrib/addressfield_autocomplete/addressfield_autocomplete.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- trunk/sites/all/modules/contrib/addressfield_autocomplete/addressfield_autocomplete.js	(revision 3048dc9511a4ddb9c6c59dac5d8176748266ff7a)
++++ trunk/sites/all/modules/contrib/addressfield_autocomplete/addressfield_autocomplete.js	(revision )
+@@ -439,10 +439,10 @@
+        * their addresses manually.
+        */
+       $('[id^="addressfield-wrapper"] input[type="text"]').once().blur(function() {
+-        addressfieldAutocompleteManualAddressGeocode($(this));
++        //addressfieldAutocompleteManualAddressGeocode($(this));
+       });
+       $('[id^="addressfield-wrapper"] select').once().change(function(e, data) {
+-        addressfieldAutocompleteManualAddressGeocode($(this), data);
++        //addressfieldAutocompleteManualAddressGeocode($(this), data);
+       });
+       /*
+        * This allows the user to click a link inside the widget

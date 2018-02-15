@@ -1,0 +1,88 @@
+diff --git a/modules/geofield_map/geofield_map.module b/modules/geofield_map/geofield_map.module
+index e22158c..296e27c 100644
+--- a/modules/geofield_map/geofield_map.module
++++ b/modules/geofield_map/geofield_map.module
+@@ -44,6 +44,7 @@ function geofield_map_field_formatter_info() {
+         'geofield_map_scrollwheel' => 0,
+         'geofield_map_draggable' => 0,
+         'geofield_map_streetview_show' => 0,
++        'geofield_map_custom_marker' => '',
+         'geofield_map_center' => array(
+           'lat' => 0,
+           'lon' => 0
+@@ -179,6 +180,9 @@ function geofield_map_field_formatter_settings_summary($field, $instance, $view_
+   if ($settings['geofield_map_streetview_show']) {
+     $summary[] = t('Show streetview button: @yn', array('@yn' => ($settings['geofield_map_streetview_show'] ? 'Yes' : 'No')));
+   }
++  if ($settings['geofield_map_custom_marker']) {
++    $summary[] = t('Display custom marker: @yn', array('@yn' => ($settings['geofield_map_custom_marker'] ? 'Yes' : 'No')));
++  }
+   if ($settings['geofield_map_center']) {
+     $summary[] = t('Default center: @yn', array('@yn' => ($settings['geofield_map_center'] ? 'Yes' : 'No')));
+   }
+@@ -359,6 +363,12 @@ function geofield_map_settings_form($settings, $element = array()) {
+     '#default_value' =>  $settings['geofield_map_streetview_show'],
+     '#return_value' => 1,
+   );
++  $element['geofield_map_custom_marker'] = array(
++    '#type' => 'textfield',
++    '#title' => t('Path to custom marker'),
++    '#description' => t('Relative path to the marker. <em>E.g. sites/all/themes/my-theme/images/my-custom-marker.png</em>'),
++    '#default_value' =>  $settings['geofield_map_custom_marker'],
++  );
+
+   return $element;
+
+@@ -405,6 +415,12 @@ function geofield_map_settings_do($settings) {
+     'streetview_show' => $settings['geofield_map_streetview_show'],
+     'center' => $settings['geofield_map_center'],
+   );
++
++  if ($settings['geofield_map_custom_marker']) {
++    // strip leading slashes from the path and attach base path
++    $map_settings['custom_marker'] = base_path() . trim($settings['geofield_map_custom_marker'], '/');
++  }
++
+   return $map_settings;
+
+ }
+diff --git a/modules/geofield_map/includes/geofield_map_plugin_style_map.inc b/modules/geofield_map/includes/geofield_map_plugin_style_map.inc
+index 5aa4c67..21a240b 100644
+--- a/modules/geofield_map/includes/geofield_map_plugin_style_map.inc
++++ b/modules/geofield_map/includes/geofield_map_plugin_style_map.inc
+@@ -40,7 +40,7 @@ class geofield_map_plugin_style_map extends views_plugin_style {
+     $options['geofield_map_draggable'] = array('default' => 0);
+     $options['geofield_map_streetview_show'] = array('default' => 0);
+     $options['geofield_map_center'] = array('default' => '0,0');
+-    $options['icon'] = array('default' => '');
++    $options['geofield_map_custom_marker'] = array('default' => '');
+     return $options;
+   }
+
+diff --git a/modules/geofield_map/js/geofield_map.js b/modules/geofield_map/js/geofield_map.js
+index d405eb1..b2eeee4 100644
+--- a/modules/geofield_map/js/geofield_map.js
++++ b/modules/geofield_map/js/geofield_map.js
+@@ -43,6 +43,9 @@
+           else if (mtc == 'menu' ) { mtc = google.maps.MapTypeControlStyle.DROPDOWN_MENU; }
+           else { mtc = false; }
+
++          //custom marker
++          var iconPath = map_settings.custom_marker;
++
+           var myOptions = {
+             zoom: parseInt(map_settings.zoom),
+             minZoom: parseInt(map_settings.min_zoom),
+@@ -112,6 +115,12 @@
+             feature.setTitle(properties.title);
+           }
+           feature.setMap(map);
++
++          if (iconPath) {
++            var icon  = new google.maps.MarkerImage(iconPath);
++            feature.setIcon(icon);
++          }
++
+           if (feature.getPosition) {
+             range.extend(feature.getPosition());
+           } else {

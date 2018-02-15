@@ -1,0 +1,44 @@
+.outer-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.inner-wrapper {
+  @include transition(transform .4s);
+
+  .mobile-nav-active & {
+    @include transform(translate3d(calc(100% - 80px), 0, 0));
+
+    @media (min-width: $bp-middle) {
+      @include transform(translate3d(0, 0, 0));
+    }
+  }
+}
+
+.content-wrapper {
+  background: #fff;
+
+  .front & {
+    background: transparent;
+  }
+
+  .container {
+    padding: 25px 0;
+
+    @media (min-width: $bp-small) {
+      padding: 35px 0;
+    }
+
+    @media (min-width: $bp-middle) {
+      padding: 55px 0;
+    }
+
+    .page-faq &, .page-outreach & {
+      padding-top: 0;
+    }
+
+    .without-bottom-padding & {
+      padding-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+Index: trunk/sites/all/modules/contrib/geocoder/plugins/geocoder_handler/google.inc
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- trunk/sites/all/modules/contrib/geocoder/plugins/geocoder_handler/google.inc	(revision 0bc6ecb9fa96b2356ce3147a797406f60168cb5f)
++++ trunk/sites/all/modules/contrib/geocoder/plugins/geocoder_handler/google.inc	(revision )
+@@ -127,7 +127,19 @@
+   }
+   if ($field['type'] == 'addressfield') {
+     $address = geocoder_widget_parse_addressfield($field_item);
+-    return geocoder_google($address, $options);
++    $res = geocoder_google($address, $options);
++    //PATCH: get coodrinates directly from addressfield
++    $data = unserialize($field_item['data']);
++    if (!empty($data['longitude'])
++      && !empty($data['longitude'])
++      && !empty($res->coords[0])
++      && !empty($res->coords[1])
++    ) {
++      $res->coords[0] = $data['longitude'];
++      $res->coords[1] = $data['latitude'];
++    }
++
++    return $res;
+   }
+   if ($field['type'] == 'location') {
+     $address = geocoder_widget_parse_locationfield($field_item);

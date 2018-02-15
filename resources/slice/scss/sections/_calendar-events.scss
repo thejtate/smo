@@ -1,0 +1,51 @@
+.section-calendar-events {
+  background: $color-w;
+  padding: 20px 0;
+  position: relative;
+  @include clearfix();
+
+  @media (min-width: $bp-small) {
+    padding: 60px 0;;
+  }
+
+  &:before {
+    @include pseudo-block($left: 50%, $top: 0, $bottom: 0);
+    background: $color-w;
+    width: 4000px;
+    margin-left: -2000px;
+  }
+
+  .calendar-wrapper, .desc {
+    position: relative;
+  }
+
+  .calendar-wrapper {
+    margin-bottom: 40px;
+
+    @media (min-width: $bp-small) {
+      float: left;
+      width: 53%;
+      margin-right: 2%;
+      margin-bottom: 0;
+    }
+  }
+
+  .desc {
+
+    @media (min-width: $bp-small) {
+      float: right;
+      width: 39%;
+      margin-right: 2%;
+      margin-bottom: 0;
+      padding-top: 101px;
+    }
+
+    .subtitle {
+      color: $color-v;
+    }
+
+    .text {
+      line-height: 1.3;
+    }
+  }
+}

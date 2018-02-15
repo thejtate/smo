@@ -1,0 +1,260 @@
+input, select, textarea {
+  @include appearance(none);
+  @include box-shadow(none);
+  @include border-radius(0);
+}
+
+.form {
+
+  label {
+    font-size: 20px;
+    font-weight: normal;
+    font-family: $klavikabasic-medium;
+
+    strong {
+      color: $color-a;
+    }
+  }
+
+  .not-label {
+    padding-top: 30px;
+  }
+
+  .type-inline {
+
+    label, select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    label {
+      margin-right: 10px;
+    }
+  }
+
+  select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+    border: 1px solid $color-a;
+    color: #3d3d3d;
+    @include input-placeholder(#3d3d3d);
+    font-size: 14px;
+    padding: 8px 15px;
+
+    &.error {
+      border-color: red;
+    }
+  }
+
+  select {
+    opacity: 0;
+  }
+
+  .form-item, .form-actions {
+    margin: 0 0 5px;
+  }
+
+  .form-type-radio, .form-type-checkbox {
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      z-index: -1;
+
+      &:checked + label:before {
+        background: $color-c;
+      }
+
+      &.error + label:before {
+        background: red;
+        border-color: red;
+      }
+
+      & + label {
+        cursor: pointer;
+        position: relative;
+        padding-left: 28px;
+        line-height: 1.3;
+
+        &:before {
+          @include pseudo-block($left: 0, $right: 0);
+          background: transparent;
+          width: 19px;
+          height: 19px;
+          border: 1px solid $color-c;
+        }
+      }
+    }
+
+    label {
+      font-size: 14px;
+      font-family: $klavikabasic-regular;
+    }
+  }
+
+  .form-group {
+    @include clearfix();
+
+    .width-100, .width-50, .width-40, .width-34, .width-33, .width-29, .width-25, .width-20, .width-17, .width-15, .width-9  {
+      float: left;
+      padding-right: 13px;
+
+      &:last-child {
+        padding-right: 0;
+      }
+
+      select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea, .select2-container, .form-submit {
+        width: 100%;
+      }
+    }
+
+    .width-100 {
+      float: none;
+      width: 100%;
+    }
+
+    .width-50 {
+      width: 50%;
+    }
+
+    .width-40 {
+      width: 100%;
+      padding-right: 0;
+
+      @media (min-width: $bp-small) {
+        padding-right: 13px;
+        width: 40%;
+      }
+    }
+
+    .width-34 {
+      width: 100%;
+      padding-right: 0;
+
+      @media (min-width: $bp-small) {
+        padding-right: 13px;
+        width: 34%;
+      }
+    }
+
+    .width-33 {
+      width: 100%;
+      padding-right: 0;
+
+      @media (min-width: $bp-small) {
+        padding-right: 13px;
+        width: 33%;
+      }
+    }
+
+    .width-29 {
+      width: 100%;
+      padding-right: 0;
+
+      @media (min-width: $bp-small) {
+        padding-right: 13px;
+        width: 29%;
+      }
+    }
+
+    .width-25 {
+      width: 25%;
+    }
+
+    .width-20 {
+      width: 100%;
+      padding-right: 0;
+
+      @media (min-width: $bp-small) {
+        padding-right: 13px;
+        width: 20%;
+      }
+    }
+
+    .width-15 {
+      width: 15%;
+    }
+
+    .width-17 {
+      width: 100%;
+      padding-right: 0;
+
+      @media (min-width: $bp-small) {
+        padding-right: 13px;
+        width: 17%;
+      }
+    }
+
+    .width-9 {
+      width: 9%;
+    }
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .separator {
+    font-size: 28px;
+    text-align: center;
+    line-height: 1.3;
+  }
+}
+
+.btns-wrap {
+  background: $color-d;
+  color: #fff;
+  display: inline-block;
+  vertical-align: top;
+  @include transition(background .4s);
+
+  &:hover {
+    background: $color-e;
+  }
+
+  a, .form-submit {
+    display: inline-block;
+    vertical-align: top;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-family: $klavikabasic-bold;
+    padding: 11px 16px;
+    text-decoration: none;
+    line-height: 1;
+    background: transparent;
+  }
+
+  &.style-big {
+
+    .form-submit {
+      padding: 16px 32px;
+      font-size: 30px;
+    }
+  }
+
+  &.style-purple {
+    background: $color-k;
+
+    &:hover {
+      background: $color-l;
+    }
+  }
+
+  &.style-blue {
+    background: $color-m;
+
+    &:hover {
+      background: $color-b;
+    }
+  }
+
+  &.style-cerulean {
+    background: $color-a;
+
+    &:hover {
+      background: $color-b;
+    }
+  }
+}

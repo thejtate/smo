@@ -1,0 +1,29 @@
+.clearfix {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+.pull-left, .rteleft {
+  float: left;
+}
+
+.pull-right, .rteright {
+
+  @media (min-width: $bp-small) {
+    float: right;
+  }
+}
+
+.pull-center, .rtecenter {
+  text-align: center;
+}

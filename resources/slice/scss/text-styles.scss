@@ -1,0 +1,276 @@
+@import "compass";
+//base styles
+@import "common/mixins";
+@import "common/fonts";
+@import "common/normalize";
+@import "common/settings";
+@import "common/typography";
+//layout
+@import "layout/btns";
+//blocks
+@import "blocks/with-bg";
+
+// Styles for CKEditor
+table.style-a {
+
+  thead, tbody {
+    border: 1px white solid !important;
+    color: white !important;
+    text-align: left;
+
+    strong {
+      font-size: 19px;
+    }
+
+    td:first-child {
+      padding: 10px !important;
+      background: #39b4e9;
+    }
+
+    td {
+      padding: 5px;
+      vertical-align: top;
+      background: #056d9b;
+      font-family: klavikabasic-regular;
+      text-align: left;
+
+      @media (min-width: $bp-small) {
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.table-wrapper {
+  overflow-x: scroll;
+
+  @media (min-width: $bp-small) {
+    overflow-x: visible;
+  }
+}
+
+.b-table {
+
+  &.style-e, &.style-f {
+
+    & * {
+      color: #188eb0;
+    }
+
+    th, td {
+      border: 1px solid #b7b7b7;
+      font-size: 14px;
+
+      &:first-child {
+        border-left: 1px solid #b7b7b7;
+      }
+    }
+  }
+
+  &.style-e {
+    min-width: 730px;
+
+    & + h3 {
+      margin: 0 0 20px;
+
+      @media (min-width: $bp-small) {
+        margin: 0 0 36px;
+      }
+
+      @media (min-width: $bp-middle) {
+        margin: 0 0 65px;
+      }
+    }
+
+    thead tr:nth-child(2), tbody tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    thead tr:first-child th {
+      padding: 10px;
+
+      @media (min-width: $bp-small) {
+        padding: 25px 10px;
+      }
+
+      &:first-child {
+        width: 130px;
+
+        @media (min-width: $bp-middle) {
+          width: 245px;
+        }
+      }
+
+      &:nth-child(2) {
+        width: 140px;
+
+        @media (min-width: $bp-middle) {
+          width: 175px;
+        }
+      }
+
+      &:nth-child(3) {
+        width: 135px;
+      }
+    }
+
+    td {
+      padding: 10px 5px;
+      position: relative;
+
+      @media (min-width: $bp-small) {
+        padding: 20px 8px;
+      }
+
+      &:nth-child(n+4) {
+        font-size: 28px;
+        line-height: 1;
+      }
+    }
+  }
+
+  &.style-f {
+    text-align: left;
+    max-width: 510px;
+    margin: 0 auto 20px;
+
+    @media (min-width: $bp-small) {
+      margin: 0 auto 35px;
+    }
+
+    @media (min-width: $bp-middle) {
+      margin: 0 auto 65px;
+    }
+
+    td {
+      &:first-child {
+        width: 360px;
+      }
+
+      &:last-child {
+        background: #f2f2f2;
+      }
+    }
+  }
+
+  &.style-g {
+    text-align: center;
+    width: 100%;
+    margin: 20px 0;
+
+    @media (min-width: $bp-small) {
+      margin: 40px 0;
+    }
+
+    thead {
+      font-size: 20px;
+
+      @media (min-width: $bp-small) {
+        font-size: 24px;
+      }
+
+      td {
+        border: 1px solid #e1e1e1;
+
+        @media (min-width: $bp-small) {
+          padding: 12px 20px;
+        }
+      }
+
+      a {
+
+        &:before {
+          bottom: 5px;
+
+          @media (min-width: $bp-small) {
+            bottom: 7px;
+          }
+        }
+
+        &:after {
+          bottom: 10px;
+
+          @media (min-width: $bp-small) {
+            bottom: 12px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      border: 1px solid #e1e1e1;
+      font-family: $klavikabasic-regular;
+
+      tr {
+
+        &:first-child td {
+          padding-top: 20px;
+
+          @media (min-width: $bp-small) {
+            padding-top: 30px;
+          }
+        }
+
+        &:last-child td {
+          padding-bottom: 20px;
+
+          @media (min-width: $bp-small) {
+            padding-bottom: 30px;
+          }
+        }
+
+        td {
+          padding: 6px 10px;
+
+          @media (min-width: $bp-small) {
+            padding: 6px 20px;
+          }
+        }
+      }
+
+      a {
+
+        &:before {
+          bottom: 0;
+        }
+
+        &:after {
+          bottom: 5px;
+        }
+      }
+    }
+
+    a {
+      text-decoration: none;
+      position: relative;
+      padding-right: 24px;
+
+      &:hover:before {
+        background: $color-q;
+      }
+
+      &:before {
+        @include pseudo-block($right: 0);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fbb806;
+        @include transition(background .3s);
+      }
+
+      &:after {
+        @include pseudo-block($right: 7px);
+        width: 7px;
+        height: 7px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+        @include transform(rotate(45deg));
+        margin-top: -3px;
+      }
+    }
+  }
+}
+
+figure.caption-left figcaption {text-align: left};
+figure.caption-center figcaption {text-align: center};
+figure.caption-right figcaption {text-align: right};

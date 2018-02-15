@@ -1,0 +1,26 @@
+From 8be70c78a264e85a890a7efc1ff198b2c5ac1741 Mon Sep 17 00:00:00 2001
+From: Mohammad Ali Abdel-Qader <m.abdulqader@1281252.no-reply.drupal.org>
+Date: Tue, 10 Mar 2015 13:02:22 +0200
+Subject: [PATCH] Issue #1738456: Warning: Creating default object from empty
+ value in cc->get_lists()
+
+---
+ class.cc.php | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/class.cc.php b/class.cc.php
+index 4b5b015..10ee9a0 100755
+--- a/class.cc.php
++++ b/class.cc.php
+@@ -227,6 +227,8 @@ class cc {
+ 	 */
+ 	function cc($api_username, $api_password)
+ 	{
++		$this->list_meta_data = new stdClass();
++		
+ 		$this->api_username = $api_username;
+ 		$this->api_password = $api_password;
+ 
+-- 
+1.8.5.2 (Apple Git-48)
+

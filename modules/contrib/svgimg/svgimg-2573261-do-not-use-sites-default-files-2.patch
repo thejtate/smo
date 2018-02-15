@@ -1,0 +1,39 @@
+diff --git a/svgimg.inc b/svgimg.inc
+index 952b3ba..6751668 100644
+--- a/svgimg.inc
++++ b/svgimg.inc
+@@ -283,7 +283,7 @@ function svgimg_root_path($uri = NULL, $directory_path = NULL) {
+     $uri = 'public://' . $uri;
+   }
+   if (empty($directory_path)) {
+-    $directory_path = variable_get('file_public_path','sites/default/files');
++    $directory_path = variable_get('file_public_path', conf_path() . '/files');
+     // enable path translation for other file schemas, e.g. not on same server
+     return drupal_realpath($uri);
+   }
+diff --git a/svgimg.module b/svgimg.module
+index 3abdbbd..57a4462 100644
+--- a/svgimg.module
++++ b/svgimg.module
+@@ -148,7 +148,7 @@ function svgimg_theme_registry_alter(&$theme_registry) {
+ * Fetch path to directory for PNG alternatives
+ */
+ function svgimg_path() {
+-  return variable_get('file_public_path','sites/default/files') . '/' . SVGIMG_PNG_PATH;
++  return variable_get('file_public_path', conf_path() . '/files') . '/' . SVGIMG_PNG_PATH;
+ }
+ 
+ /*
+diff --git a/svgimg.render.inc b/svgimg.render.inc
+index e55d11b..f140194 100644
+--- a/svgimg.render.inc
++++ b/svgimg.render.inc
+@@ -6,7 +6,7 @@
+ * @param string $png_ref
+ */
+ function svgimg_render($png_ref) {
+-  $directory_path = variable_get('file_public_path','sites/default/files');
++  $directory_path = variable_get('file_public_path', conf_path() . '/files');
+   $path = svgimg_path();
+   $current_path = $_GET['q'];
+   $png_path = preg_replace('#'.$path.'/#', '', $current_path);

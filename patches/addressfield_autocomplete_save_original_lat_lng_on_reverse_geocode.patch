@@ -1,0 +1,17 @@
+Index: trunk/sites/all/modules/contrib/addressfield_autocomplete/addressfield_autocomplete.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- trunk/sites/all/modules/contrib/addressfield_autocomplete/addressfield_autocomplete.js	(revision 6663bd0e25c89ffe1539ffc1b73551a1853858c0)
++++ trunk/sites/all/modules/contrib/addressfield_autocomplete/addressfield_autocomplete.js	(revision )
+@@ -108,6 +108,9 @@
+             if (results[0]) {
+               var map = o.geocomplete('map');
+               map.setCenter(latlng);
++              //patched, leave original selected lat lng.
++              results[0].geometry.location = latlng;
++
+               o.data('result', results[0]);
+               o.addClass('complete reverse-geocode');
+               addressfieldAutocompleteToggleWidget(o);

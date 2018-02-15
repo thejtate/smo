@@ -1,0 +1,69 @@
+Index: htdocs/sites/all/modules/contrib/geofield/modules/geofield_map/geofield_map.module
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- htdocs/sites/all/modules/contrib/geofield/modules/geofield_map/geofield_map.module	(date 1436973042000)
++++ htdocs/sites/all/modules/contrib/geofield/modules/geofield_map/geofield_map.module	(revision )
+@@ -48,6 +48,7 @@
+           'lat' => 0,
+           'lon' => 0
+         ),
++        'geofield_map_style' => '',
+       ),
+     ),
+   );
+@@ -182,6 +183,7 @@
+   if ($settings['geofield_map_center']) {
+     $summary[] = t('Default center: @yn', array('@yn' => ($settings['geofield_map_center'] ? 'Yes' : 'No')));
+   }
++  $summary[] = t('Using custom styles: @yn', array('@yn' => ($settings['geofield_map_style'] ? 'Yes' : 'No')));
+ 
+   return implode('<br />', $summary);
+ 
+@@ -359,6 +361,15 @@
+     '#default_value' =>  $settings['geofield_map_streetview_show'],
+     '#return_value' => 1,
+   );
++  $element['geofield_map_style'] = array(
++    '#type' => 'textarea',
++    '#title' => t('Style array'),
++    '#default_value' => $settings['geofield_map_style'],
++    /*'#size' => 25,
++    '#maxlength' => 25,*/
++    '#description' => t('Add custom google map theme\'s. For example go to ') . l('snazzymaps','http://www.snazzymaps.com', array('attributes' => array('target'=>'_blank'))) . t(', select your desired Google Map them and copy paste the JavaScript Style Array here.'),
++    '#required' => FALSE,
++  );
+ 
+   return $element;
+ 
+@@ -404,7 +415,9 @@
+     'draggable' => $settings['geofield_map_draggable'],
+     'streetview_show' => $settings['geofield_map_streetview_show'],
+     'center' => $settings['geofield_map_center'],
++    'styles' => $settings['geofield_map_style'],
+   );
++
+   return $map_settings;
+ 
+ }
+Index: htdocs/sites/all/modules/contrib/geofield/modules/geofield_map/js/geofield_map.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- htdocs/sites/all/modules/contrib/geofield/modules/geofield_map/js/geofield_map.js	(date 1436973042000)
++++ htdocs/sites/all/modules/contrib/geofield/modules/geofield_map/js/geofield_map.js	(revision )
+@@ -59,8 +59,11 @@
+             overviewMapControlOptions: {opened: (map_settings.overview_opened ? true : false)},
+             streetViewControl: (map_settings.streetview_show ? true : false),
+             scaleControl: (map_settings.scale ? true : false),
+-            scaleControlOptions: {style: google.maps.ScaleControlStyle.DEFAULT}
++            scaleControlOptions: {style: google.maps.ScaleControlStyle.DEFAULT},
++            styles : (JSON.parse("[" + map_settings.styles + "]"))
+           };
++
++          console.log(myOptions);
+ 
+           var map = new google.maps.Map($(element).get(0), myOptions);
+           // Store a reference to the map object so other code can interact

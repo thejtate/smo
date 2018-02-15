@@ -1,0 +1,25 @@
+.section-newsletter {
+  background: $color-v;
+  padding: 37px 0;
+  position: relative;
+
+  @media (min-width: $bp-middle) {
+    width: 62%;
+    margin: 0 auto;
+  }
+
+  &:before {
+    @include pseudo-block($left: 50%, $top: 0, $bottom: 0);
+    background: $color-v;
+    width: 4000px;
+    margin-left: -2000px;
+  }
+
+  .form-newsletter {
+    position: relative;
+  }
+
+  h4, .form-type-checkbox, .form-type-checkbox strong {
+    color: $color-o;
+  }
+}

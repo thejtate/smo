@@ -1,0 +1,62 @@
+diff --git a/sites/all/modules/ckeditor/includes/ckeditor.admin.inc b/sites/all/modules/ckeditor/includes/ckeditor.admin.inc
+index b3c576f..05da62b 100644
+--- a/sites/all/modules/ckeditor/includes/ckeditor.admin.inc
++++ b/sites/all/modules/ckeditor/includes/ckeditor.admin.inc
+@@ -461,6 +461,17 @@ function ckeditor_admin_global_profile_form($form, $form_state, $mode = 'add') {
+     '#description' => t('When enabled, the toolbar can be built by using the drag-and-drop feature. Otherwise you will need to enter the toolbar configuration manually to the text box.'),
+   );
+ 
++  $form['ckeditor_advanced_settings']['ajax_filter_xss'] = array(
++    '#type' => 'radios',
++    '#title' => t('Use the AJAX filter every time you switch formats or load page.'),
++    '#default_value' => !empty($profile->settings['ajax_filter_xss']) ? $profile->settings['ajax_filter_xss'] : 'f',
++    '#options' => array(
++      't' => t('Enabled'),
++      'f' => t('Disabled')
++    ),
++    '#description' => t('When enabled, will be rewritten in the database in accordance with the format - <strong>this is different from the standard behavior of Drupal! Not recommended!</strong> Use the disabled, because xss filtering provides WYSIWIG and filters are used to view the page and not on edit.'),
++  );
++
+   $form['submit'] = array(
+     '#type' => 'submit',
+     '#value' => $btn
+diff --git a/sites/all/modules/ckeditor/includes/ckeditor.lib.inc b/sites/all/modules/ckeditor/includes/ckeditor.lib.inc
+index e054d16..83eb97e 100644
+--- a/sites/all/modules/ckeditor/includes/ckeditor.lib.inc
++++ b/sites/all/modules/ckeditor/includes/ckeditor.lib.inc
+@@ -1419,7 +1419,9 @@ function ckeditor_load_by_field($field, $format, $show_toggle = TRUE, $add_field
+       if (module_exists('pagebreak')) {
+         drupal_add_js(array('ckeditor' => array('pagebreak' => TRUE)), 'setting');
+       }
+-      drupal_add_js(array('ckeditor' => array('ajaxToken' => drupal_get_token('ckeditorAjaxCall'), 'xss_url' => url('ckeditor/xss'))), 'setting');
++      if (isset($global_profile->settings['ajax_filter_xss']) && $global_profile->settings['ajax_filter_xss'] == 't') {
++        drupal_add_js(array('ckeditor' => array('ajaxToken' => drupal_get_token('ckeditorAjaxCall'), 'xss_url' => url('ckeditor/xss'), 'ajax_filter_xss' => TRUE)), 'setting');
++      }
+       $is_running = TRUE;
+     }
+ 
+diff --git a/sites/all/modules/ckeditor/includes/ckeditor.utils.js b/sites/all/modules/ckeditor/includes/ckeditor.utils.js
+index 27552a4..6ab8600 100644
+--- a/sites/all/modules/ckeditor/includes/ckeditor.utils.js
++++ b/sites/all/modules/ckeditor/includes/ckeditor.utils.js
+@@ -124,9 +124,9 @@ window.CKEDITOR_BASEPATH = Drupal.settings.ckeditor.editor_path;
+     }
+   }
+ 
+-  Drupal.ckeditorOn = function(textarea_id, run_filter) {
++  Drupal.ckeditorOn = function(textarea_id) {
+ 
+-    run_filter = typeof(run_filter) != 'undefined' ? run_filter : true;
++    run_filter = typeof(Drupal.settings.ckeditor.ajax_filter_xss) == 'undefined' ? false : true;
+ 
+     if (typeof(textarea_id) == 'undefined' || textarea_id.length == 0 || $("#" + textarea_id).length == 0) {
+       return;
+@@ -298,7 +298,7 @@ window.CKEDITOR_BASEPATH = Drupal.settings.ckeditor.editor_path;
+             Drupal.ckeditorOff(ta_id);
+             if (typeof(Drupal.settings.ckeditor.input_formats[$(this).val()]) != 'undefined'){
+               if ($('#'+ta_id).hasClass('ckeditor-processed')) {
+-                Drupal.ckeditorOn(ta_id, false);
++                Drupal.ckeditorOn(ta_id);
+               }
+               else {
+                 Drupal.ckeditorOn(ta_id);

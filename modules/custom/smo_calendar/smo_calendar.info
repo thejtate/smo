@@ -1,0 +1,12 @@
+name = SMO Calendar
+description = SMO homepage calendar
+package = SMO
+core = 7.x
+version = 7.x-1.x
+
+files[] = smo_calendar.admin.inc
+
+configure = admin/config/smo-calendar/settings
+
+dependencies[] = ctools
+dependencies[] = office_hours

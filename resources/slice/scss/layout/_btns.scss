@@ -1,0 +1,87 @@
+.btn {
+  background: $color-d;
+  color: #fff;
+  @include transition(background .4s);
+  border: none;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: $klavikabasic-bold;
+  padding: 11px 16px;
+  text-decoration: none;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top;
+
+  &:hover {
+    background: $color-e;
+  }
+
+  .page-node-6 & {
+    margin-bottom: 4px;
+
+    @media (min-width: $bp-small) {
+      margin-bottom: 0;
+    }
+  }
+
+  &.style-big {
+    padding: 12px 22px;
+    font-size: 18px;
+
+    @media (min-width: $bp-small) {
+      padding: 12px 26px;
+      font-size: 26px;
+    }
+
+    @media (min-width: $bp-middle) {
+      padding: 16px 32px;
+      font-size: 30px;
+    }
+  }
+
+  &.style-purple {
+    background: $color-h;
+
+    &:hover {
+      background: $color-l;
+    }
+  }
+
+  &.style-blue {
+    background: $color-m;
+
+    &:hover {
+      background: $color-b;
+    }
+  }
+
+  &.style-cerulean {
+    background: $color-a;
+
+    &:hover {
+      background: $color-b;
+    }
+  }
+
+  &.type-download {
+    min-width: 280px;
+    padding: 19px 25px 19px 60px;
+    text-transform: none;
+    position: relative;
+    text-align: left;
+
+    &:before {
+      @include oneline-sprite-box($icons, icon-download);
+      @include pseudo-block($left: 24px, $top: 50%);
+      @include translate(0, -50%);
+    }
+
+    .page-node-94 &{
+      width: 288px;
+
+      @media (min-width: $bp-small) {
+       min-width: 380px;
+     }
+    }
+  }
+}

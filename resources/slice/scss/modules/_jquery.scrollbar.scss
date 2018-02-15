@@ -1,0 +1,197 @@
+/*************** SCROLLBAR BASE CSS ***************/
+
+.scroll-wrapper {
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: relative;
+  margin: 0 -4%;
+  max-height: 600px;
+
+  @media (min-width: $bp-small) {
+    max-height: 460px;
+  }
+
+  @media (min-width: $bp-middle) {
+    max-height: 375px;
+  }
+
+  @media (min-width: 1100px) {
+    max-height: 430px;
+  }
+
+  @media (min-width: 1200px) {
+    max-height: 480px;
+  }
+
+  @media (min-width: $bp-large) {
+    max-height: 464px;
+  }
+
+  @media (min-width: 1700px) {
+    max-height: 420px;
+  }
+
+  @media (min-width: 1800px) {
+    max-height: 464px;
+  }
+
+  @media (min-width: 2000px) {
+    max-height: 520px;
+  }
+
+  @media (min-width: 2200px) {
+    max-height: 560px;
+  }
+
+  @media (min-width: 2300px) {
+    max-height: 600px;
+  }
+
+  @media (min-width: 2400px) {
+    max-height: 620px;
+  }
+}
+
+.scroll-wrapper > .scroll-content {
+  border: none !important;
+  box-sizing: content-box !important;
+  height: auto;
+  left: 0;
+  margin: 0;
+  max-height: none;
+  max-width: none !important;
+  overflow: scroll !important;
+  padding: 0;
+  position: relative !important;
+  top: 0;
+  width: auto !important;
+}
+
+.scroll-wrapper > .scroll-content::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+.scroll-element {
+  display: none;
+}
+.scroll-element, .scroll-element div {
+  box-sizing: content-box;
+}
+
+.scroll-element.scroll-x.scroll-scrollx_visible,
+.scroll-element.scroll-y.scroll-scrolly_visible {
+  display: block;
+}
+
+.scroll-element .scroll-bar,
+.scroll-element .scroll-arrow {
+  cursor: default;
+}
+
+.scroll-textarea {
+  border: 1px solid #cccccc;
+  border-top-color: #999999;
+}
+.scroll-textarea > .scroll-content {
+  overflow: hidden !important;
+}
+.scroll-textarea > .scroll-content > textarea {
+  border: none !important;
+  box-sizing: border-box;
+  height: 100% !important;
+  margin: 0;
+  max-height: none !important;
+  max-width: none !important;
+  overflow: scroll !important;
+  outline: none;
+  padding: 2px;
+  position: relative !important;
+  top: 0;
+  width: 100% !important;
+}
+.scroll-textarea > .scroll-content > textarea::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+
+
+
+/*************** SCROLLBAR MAC OS X ***************/
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element,
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element div
+{
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element div {
+  display: block;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element .scroll-element_track { display: none; }
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element .scroll-bar {
+  background-color: #3287ad;
+  display: block;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  opacity: 0;
+
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+
+  -webkit-transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.2s linear;
+  -o-transition: opacity 0.2s linear;
+  -ms-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+.smo-calendar-views-day-wrapper .item-bd:hover > .scroll-element .scroll-bar,
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-draggable .scroll-bar {
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+  filter: alpha(opacity=70);
+  opacity: 0.7;
+}
+
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-x {
+  bottom: 0px;
+  height: 0px;
+  left: 0;
+  min-width: 100%;
+  overflow: visible;
+  width: 100%;
+}
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-y {
+  height: 100%;
+  min-height: 100%;
+  right: 0px;
+  top: 0;
+  width: 0px;
+}
+
+/* scrollbar height/width & offset from container borders */
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-x .scroll-bar { height: 7px; min-width: 10px; top: -9px; }
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-y .scroll-bar { left: -9px; min-height: 10px; width: 7px; }
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-x .scroll-element_outer { left: 2px; }
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-x .scroll-element_size { left: -4px; }
+
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-y .scroll-element_outer { top: 2px; }
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-y .scroll-element_size { top: -4px; }
+
+/* update scrollbar offset if both scrolls are visible */
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -11px; }
+.smo-calendar-views-day-wrapper .item-bd > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -11px; }

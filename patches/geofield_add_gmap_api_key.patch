@@ -1,0 +1,43 @@
+Index: trunk/sites/all/modules/contrib/geofield/geofield.info
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- trunk/sites/all/modules/contrib/geofield/geofield.info	(revision e9ccece7c924fcab305a7df69cb3a39318fec7fd)
++++ trunk/sites/all/modules/contrib/geofield/geofield.info	(revision )
+@@ -26,8 +26,8 @@
+ files[] = views/proximity_plugins/geofieldProximityExposedFilter.inc
+ files[] = views/proximity_plugins/geofieldProximityContextualFilter.inc
+ ; Information added by Drupal.org packaging script on 2014-09-21
+-version = "7.x-2.3"
++version = "7.x-2.3+0-dev"
+ core = "7.x"
+ project = "geofield"
+-datestamp = "1411337638"
++datestamp = "1411337633"
+ 
+Index: trunk/sites/all/modules/contrib/geofield/modules/geofield_map/geofield_map.module
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- trunk/sites/all/modules/contrib/geofield/modules/geofield_map/geofield_map.module	(revision e9ccece7c924fcab305a7df69cb3a39318fec7fd)
++++ trunk/sites/all/modules/contrib/geofield/modules/geofield_map/geofield_map.module	(revision )
+@@ -101,10 +101,16 @@
+       'class' => 'geofieldMap',
+     );
+ 
++    if(module_exists('gmap') && !empty(variable_get('gmap_api_key', ''))){
++      $key = '&key='.variable_get('gmap_api_key', '');
++    } else {
++      $key = '';
++    }
++
+     $element[0] = array(
+       '#attached' => array(
+         'js' => array(
+-          '//maps.googleapis.com/maps/api/js?sensor=false' => array('type' => 'external'),
++          '//maps.googleapis.com/maps/api/js?sensor=false' . $key => array('type' => 'external'),
+           drupal_get_path('module', 'geofield_map') . '/js/GeoJSON.js',
+           drupal_get_path('module', 'geofield_map') . '/js/geofield_map.js',
+           array('data' => array('geofieldMap' => $js_settings), 'type' => 'setting'),

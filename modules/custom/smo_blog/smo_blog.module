@@ -1,0 +1,278 @@
+<?php
+/**
+ * @file
+ * Blog site functionality
+ */
+define('SMO_BLOG_BASE_PATH', 'news');
+
+/**
+ * Implements hook_menu().
+ */
+function smo_blog_menu() {
+  // This is the minimum information you can provide for a menu item.
+  $items['admin/config/smo_blog'] = array(
+    'title' => 'Blog',
+    'description' => 'Adjust Blog options.',
+    'position' => 'right',
+    'weight' => -5,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer smo blog configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  $items['admin/config/smo_blog/settings'] = array(
+    'title' => 'Settings',
+    'description' => 'Blog settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('smo_blog_admin_settings'),
+    'access arguments' => array('administer smo blog configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'smo_blog.admin.inc',
+  );
+
+  menu_cache_clear('manager_menu');
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function smo_blog_permission() {
+  return array(
+    'administer smo blog configuration' => array(
+      'title' => t('Administer Smo blog configuration'),
+    )
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function smo_blog_theme($existing, $type, $theme, $path) {
+  $theme_path = drupal_get_path('module', 'smo_blog');
+
+  return array(
+    'smo_blog__news_sidebar' => array(
+      'template' => 'smo-blog--news-sidebar',
+      'arguments' => array(
+        'archive' => NULL,
+        'tags' => NULL,
+        'contact' => NULL,
+      ),
+      'path' => $theme_path . '/templates',
+    ),
+    'smo_blog__post_by_month' => array(
+      'template' => 'smo-blog--post-by-month',
+      'arguments' => array(
+        'archive' => NULL,
+        'blog_base_path' => SMO_BLOG_BASE_PATH
+      ),
+      'path' => $theme_path . '/templates',
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_block_info().
+ */
+function smo_blog_block_info() {
+  $blocks = array();
+  $blocks['smo_blog_news_sidebar_block'] = array(
+    'info' => t('News sidebar'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function smo_blog_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'smo_blog_news_sidebar_block':
+      $block['subject'] = '';
+      $block['content'] = _smo_blog_news_sidebar_block_content();
+      break;
+  }
+
+  return $block;
+}
+
+/**
+ * Get sidebar.
+ */
+function _smo_blog_news_sidebar_block_content() {
+  $archive = _smo_blog_news_sidebar_get_archive();
+
+//  $tags = _smo_blog_news_sidebar_get_tags();
+  $tags = '';
+  $contact = variable_get('smo_blog_settings_contact', '');
+
+  $sidebar = theme('smo_blog__news_sidebar', array(
+    'archive' => $archive,
+    'tags' => $tags,
+    'contact' => $contact,
+  ));
+
+  return $sidebar;
+}
+
+/**
+ * Get archive block.
+ *
+ * @return mixed
+ * @throws \Exception
+ */
+function _smo_blog_news_sidebar_get_archive() {
+  $show_titles = variable_get('smo_blog_settings_nodes', 0);
+  $show_month = variable_get('smo_blog_settings_month', 0);
+
+  $query = db_select('field_data_field_news_date', 'fdate');
+
+  $query->addExpression("DATE_FORMAT(field_news_date_value, '%M')", 'month');
+  $query->addExpression("DATE_FORMAT(field_news_date_value, '%m')", 'month_digits');
+  $query->addExpression("DATE_FORMAT(field_news_date_value, '%Y')", 'year');
+  $query->addExpression("count(entity_id)", 'count');
+
+  if ($show_titles) {
+    $query->addExpression("group_concat(entity_id SEPARATOR '|')", "nids");
+  }
+
+  $query->leftJoin('node', 'n', 'n.vid = fdate.revision_id');
+  $query->condition('n.status', 1);
+  $query->condition('n.type', 'news');
+
+  $query->groupBy('year');
+  $query->groupBy('month_digits');
+  $query->orderBy('year', 'desc');
+  $query->orderBy('month_digits', 'desc');
+
+  drupal_alter('smo_blog_get_archive_query', $query);
+
+  $rows = $query->execute()->fetchAll();
+
+  $year_count = array();
+  foreach ($rows as $row) {
+    $year_count[$row->year] = (isset($year_count[$row->year])) ? $year_count[$row->year] + $row->count : $row->count;
+  }
+
+  $archive_data = array();
+
+  foreach ($rows as $row) {
+    if ($show_month) {
+      $row->year_count = (isset($year_count[$row->year])) ? $year_count[$row->year] : 0;
+      $archive_data[$row->year][$row->month] = $row;
+
+      if ($show_titles) {
+        $nids = explode("|", $row->nids);
+        $subquery = db_select('node', 'n');
+        $subquery->fields('n', array('nid', 'title'));
+        $subquery->condition('n.nid', $nids, 'IN');
+        $subquery->orderBy('created', "DESC");
+        $limit = variable_get('smo_blog_settings_count_nodes', 10);
+        if (!empty($limit)) {
+          $subquery->range(0, $limit);
+        }
+        $archive_data[$row->year][$row->month]->nodes = $subquery->execute()
+          ->fetchAllKeyed(0);
+      }
+    }
+    else {
+      $archive_data[$row->year] = '';
+    }
+  }
+
+
+  drupal_alter('smo_blog_news_sidebar_get_archive', $archive_data);
+
+  $block = theme('smo_blog__post_by_month', array(
+    'archive' => $archive_data,
+    'blog_base_path' => SMO_BLOG_BASE_PATH
+  ));
+
+  return $block;
+}
+
+/**
+ * Get tags block.
+ *
+ * @return string
+ * @throws \Exception
+ */
+function _smo_blog_news_sidebar_get_tags() {
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_news_type', 'news_type', "n.nid = news_type.entity_id AND (news_type.entity_type = 'node' AND news_type.deleted = '0')");
+  $query->leftJoin('taxonomy_term_data', 'term_data', "news_type.field_news_type_tid = term_data.tid");
+  $query->leftJoin('taxonomy_vocabulary', 'tv', "term_data.vid = tv.vid");
+  $query->fields('term_data', array('tid', 'name'));
+  $query->condition('tv.machine_name', 'news');
+  $query->groupBy('term_data.name');
+  $query->addExpression("count(entity_id)", 'count');
+  $query->orderBy('term_data.name', 'DESC');
+
+  $tags = $query->execute()->fetchAll();
+
+  if (isset($tags) && !empty($tags) && is_array($tags)) {
+    foreach ($tags as $item) {
+      $name = $item->name . ' (' . $item->count . ')';
+      $tid = $item->tid;
+      $items[] = l($name, SMO_BLOG_BASE_PATH, array('query' => array('term' => $tid)));
+    }
+    $item_list = array(
+      'items' => $items,
+      'type' => 'ul',
+      'attributes' => array('class' => array('news-category')),
+    );
+    return theme('item_list', $item_list);
+  }
+}
+
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function smo_blog_views_query_alter(&$view, &$query) {
+  if (($view->name == 'news') && ($view->current_display == 'block_1')) {
+    foreach ($query->where as $group => &$where) {
+      $params = drupal_get_query_parameters();
+
+      $date = isset($params['date']) ? $params['date'] : '';
+      $tid = isset($params['term']) ? $params['term'] : '';
+
+      foreach ($where['conditions'] as $key => $condition) {
+        if (strpos($condition['field'], 'field_data_field_news_date') !== FALSE) {
+
+          if ($date) {
+            if (strpos($params['date'], '-') !== FALSE) {
+              $start_date = $params['date'];
+              $end_date = $params['date'];
+            }
+            else {
+              $start_date = $params['date'] . '-01';
+              $end_date = $params['date'] . '-12';
+            }
+
+            $where['conditions'][$key]['value'][':field_data_field_news_date_field_news_date_value'] = $start_date;
+            $where['conditions'][$key]['value'][':field_data_field_news_date_field_news_date_value1'] = $end_date;
+          }
+          else {
+            unset($where['conditions'][$key]);
+          }
+        }
+
+        if ($condition['field'] == 'taxonomy_index.tid') {
+
+          if ($tid) {
+            $where['conditions'][$key]['value'] = array($tid => $tid);
+          }
+          else {
+            unset($where['conditions'][$key]);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+$icons: sprite-map('icons/*.png', $spacing: 8px, $layout: 'smart');
+//$h-sprites: sprite-map('h-sprites/*.png',$layout: 'vertical', $spacing: 8px);
+//$v-sprites: sprite-map('v-sprites/*.png', $layout: 'horizontal', $spacing: 8px);
+
+$experimental-support-for-svg: true;
+$experimental-support-for-opera: false;
+
+//width
+//$width: 1330px;
+//$width-tablet: 768px;
+//$width-mobile: 480px;
+
+//color
+$color: #555555;
+$color-a: #39b4e9;
+$color-b: #056d9b;
+$color-c: #47b9d2;
+$color-d: #ff7200;
+$color-e: #f9b532;
+$color-f: #a6a6a6;
+$color-g: #d1344d;
+$color-h: #553670;
+$color-i: #f86821;
+$color-j: #1683b3;
+$color-k: #402854;
+$color-l: #784d9e;
+$color-m: #2b87af;
+$color-n: #3fa1b6;
+$color-o: #ffffff;
+$color-p: #28a4da;
+$color-q: #ff8e29;
+$color-r: #9d45ca;
+$color-s: #c77aee;
+$color-t: #ff9c00;
+$color-u: #ffba00;
+$color-v: #8251db;
+$color-w: #f2f2f2;
+$color-x: #b6b6b6;
+
+//fonts
+$klavika-light: klavika-light;
+$klavikabasic-regular: klavikabasic-regular;
+$klavikabasic-medium: klavikabasic-medium;
+$klavikabasic-bold: klavikabasic-bold;
+
+//grid vars
+
+//widths
+$width-xsmall: 90%;
+//xs < $bp-small
+$bp-small: 768px;
+$width-small: 730px;
+//$bp-middle > sm >= $bp-small
+$bp-middle: 992px;
+$width-middle: 970px;
+//$bp-large > md >= $bp-middle
+$bp-large: 1300px;
+$width-large: 981px;
+//lg >= $bp-large
+
+//offsets
+$container-padding-left: 0;
+$container-padding-right: 0;
+
+$container-fluid-padding-left: 0;
+$container-fluid-padding-right: 0;
+
+$row-margin-left: -17px;
+$row-margin-right: -17px;
+
+$col-padding-left: 17px;
+$col-padding-right: 17px;

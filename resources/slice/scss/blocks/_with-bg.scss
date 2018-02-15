@@ -1,0 +1,79 @@
+.b-with-bg {
+  position: relative;
+  z-index: 1;
+  padding: 30px 0;
+
+  @media (min-width: $bp-small) {
+    padding: 40px 0;
+  }
+
+  @media (min-width: $bp-middle) {
+    padding: 50px 0;
+  }
+
+  .page-faq & {
+    padding: 40px 0;
+    margin-bottom: 22px;
+
+    @media (min-width: $bp-small) {
+      padding: 80px 0;
+      margin-bottom: 52px;
+    }
+  }
+
+  &.editor {
+    padding: 0;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  &:before {
+    @include pseudo-block($left: 50%, $top: 0, $bottom: 0);
+    position: absolute;
+    width: 4000px;
+    margin-left: -2000px;
+    z-index: -1;
+  }
+
+  &.style-gray {
+    background: #e8e8e8;
+
+    &:before {
+      background: #e8e8e8;
+    }
+  }
+
+  &.style-purple, &.style-blue {
+    color: #fff;
+
+    * {
+      color: #fff;
+    }
+  }
+
+  &.style-purple {
+    background: $color-h;
+
+    &:before {
+      background: $color-h;
+    }
+  }
+
+  &.style-blue {
+    background: $color-b;
+
+    &:before {
+      background: $color-b;
+    }
+  }
+
+  div.cols {
+    margin-bottom: 0;
+
+    &.cols-2 .col {
+      padding-top: 0;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+name = SMO basic page constructor module
+description = SMO basic page constructor module
+package = SMO
+core = 7.x
+version = 7.x-1.x
+
+;files[] =
+;dependencies[] = 

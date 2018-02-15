@@ -1,0 +1,97 @@
+<?php
+/**
+ * @file
+ * SMO media filter.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function smo_mediafilter_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'smo_mediafilter') . '/views',
+  );
+}
+
+/**
+ * Implements hook_media_browser_plugin_info().
+ */
+function smo_mediafilter_media_browser_plugin_info() {
+  return array(
+    'smo_mediafilter' => array(
+      'title' => t('SMO Home Gallery'),
+      'weight' => 10,
+      'class' => 'MediaBrowserView',
+      'view_name' => 'smo_mediafilter',
+      'view_display_id' => 'smo_mediafilter_home_gallery',
+    )
+  );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function smo_mediafilter_form_file_entity_add_upload_multiple_alter(&$form, &$form_state) {
+  if (isset($form['#options']['enabledPlugins']) &&
+    array_key_exists('smo_mediafilter', $form['#options']['enabledPlugins'])) {
+
+    $smo_home_gallery_term = taxonomy_term_load(variable_get('smo_mediafilter_home_gallery_folder_tid'));
+
+    if ($smo_home_gallery_term && isset($form['field_folder'][LANGUAGE_NONE]['#options'])) {
+      $form['field_folder'][LANGUAGE_NONE]['#options'] = array($smo_home_gallery_term->tid => $smo_home_gallery_term->name);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function smo_mediafilter_form_file_entity_add_upload_alter(&$form, &$form_state) {
+
+  if (isset($form['#options']['enabledPlugins']) &&
+    array_key_exists('smo_mediafilter', $form['#options']['enabledPlugins'])
+  ) {
+
+    switch ($form['#step']) {
+      // Add folder selection to the upload form.
+      case 1:
+        $smo_home_gallery_term = taxonomy_term_load(variable_get('smo_mediafilter_home_gallery_folder_tid'));
+
+        if ($smo_home_gallery_term && isset($form['field_folder'][LANGUAGE_NONE]['#options'])) {
+          $form['field_folder'][LANGUAGE_NONE]['#options'] = array($smo_home_gallery_term->tid => $smo_home_gallery_term->name);
+        }
+        break;
+
+      // Nothing to do for now.
+      case 2:
+      case 3:
+    }
+
+  }
+}
+
+/**
+ * Implements hook_field_attach_presave().
+ */
+function smo_mediafilter_field_attach_presave($entity_type, $entity) {
+  $field_name = isset($entity->field_name) ? $entity->field_name : '';
+  if (($entity_type == 'field_collection_item') && ($field_name == 'field_home_gallery')) {
+    $fid = (isset($entity->field_home_gallery_image) &&
+      !empty($entity->field_home_gallery_image[LANGUAGE_NONE])) ?
+      $entity->field_home_gallery_image[LANGUAGE_NONE][0]['fid'] : '';
+
+    if ($fid) {
+      $query = db_select('file_usage', 'fu')
+        ->fields('fu', array('count'))
+        ->condition('fu.fid', $fid);
+      $count = $query->execute()->fetchField();
+
+      if (empty($count)) {
+        $file = file_load($fid);
+        file_usage_add($file, 'smo_mediafilter', 'home_gallery_file', $fid);
+        unset($file);
+      }
+    }
+  }
+}

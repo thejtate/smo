@@ -1,0 +1,251 @@
+<?php
+
+/**
+ * @file
+ * SMO basic page constructor.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function smo_basic_page_permission() {
+  $return = array();
+
+  $return['smo_basic_page_classes_administrator'] = array(
+    'title' => t('Access to edit basic pages body classes.'),
+    'description' => t('Allow to the user to add css classes to pages.'),
+  );
+
+  return $return;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function smo_basic_page_form_alter(&$form, &$form_state, $form_id) {
+
+  if(strpos($form_id, '_node_form') !== FALSE &&  !empty($form['field_basic_content_blocks'])) {
+
+    $path = drupal_get_path('module', 'smo_basic_page');
+
+    drupal_add_js($path . '/js/smo_basic_page.js', array('type' => 'file', 'scope' => 'footer', 'weight' => 50));
+    $form['#attached']['css'][] = $path . '/css/smo_basic_page.css';
+
+    //rename buttons.
+    if(!empty($form['field_basic_content_blocks'][LANGUAGE_NONE])) {
+      foreach (element_children($form['field_basic_content_blocks'][LANGUAGE_NONE]) as $child_key) {
+        if(is_numeric($child_key)) {
+          $form['field_basic_content_blocks'][LANGUAGE_NONE][$child_key]['remove_button']['#value'] = t('Remove block');
+        }
+        $form['field_basic_content_blocks'][LANGUAGE_NONE]['add_more']['#value'] = t('Add new Block');
+      }
+    }
+
+  } elseif($form_id == 'field_collection_item_form' && $form['#bundle'] == 'field_basic_content_blocks') {
+
+    $path = drupal_get_path('module', 'smo_basic_page');
+    drupal_add_js($path . '/js/smo_basic_page.js', array('type' => 'file', 'scope' => 'footer', 'weight' => 50));
+    $form['#attached']['css'][] = $path . '/css/smo_basic_page.css';
+
+    smo_basic_page_alter_field_content_block_element_form($form);
+  }
+
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function smo_basic_page_field_widget_form_alter (
+  &$element,
+  &$form_state,
+  $context
+) {
+
+  // Add a css class to widget form elements for all fields of type mytype.
+  if ($context['field']['type'] == 'field_collection' && $context['field']['field_name'] == 'field_basic_content_blocks') {
+    //dsm($element);
+    smo_basic_page_alter_field_content_block_element_form($element);
+  }
+}
+
+/**
+ * Alter field_basic_content_blocks field form and Add color classes to textareas.
+ *
+ * @param $form_element
+ */
+function smo_basic_page_alter_field_content_block_element_form(&$form_element) {
+
+  if(!empty($form_element['field_basic_content_color_scheme'][LANGUAGE_NONE]['#default_value'][0])) {
+    $color = $form_element['field_basic_content_color_scheme'][LANGUAGE_NONE]['#default_value'][0];
+    switch($color) {
+      case 'default':
+        $form_element['field_basic_content_block_col1'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'default';
+        $form_element['field_basic_content_block_col2'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'default';
+        break;
+      case 'grey':
+        $form_element['field_basic_content_block_col1'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'editor style-gray b-with-bg';
+        $form_element['field_basic_content_block_col2'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'editor style-gray b-with-bg';
+        break;
+      case 'purple':
+        $form_element['field_basic_content_block_col1'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'editor style-purple b-with-bg';
+        $form_element['field_basic_content_block_col2'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'editor style-purple b-with-bg';
+        break;
+      case 'blue':
+        $form_element['field_basic_content_block_col1'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'editor style-blue b-with-bg';
+        $form_element['field_basic_content_block_col2'][LANGUAGE_NONE][0]['#attributes']['editor-classes'] = 'editor style-blue b-with-bg';
+        break;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ *
+ * Preprocess field_basic_content_block_type field collection.
+ */
+function smo_basic_page_preprocess_entity(&$vars) {
+
+  if(!empty($vars['field_collection_item'])
+    && !empty($vars['field_collection_item']->field_name)
+    && $vars['field_collection_item']->field_name == 'field_basic_content_blocks'
+  ) {
+
+    smo_basic_page_hide_field($vars['content']['field_basic_content_color_scheme']);
+    smo_basic_page_hide_field($vars['content']['field_basic_content_block_width']);
+    smo_basic_page_hide_field($vars['content']['field_basic_content_block_type']);
+
+    $type = !empty($vars['field_collection_item']->field_basic_content_block_type[LANGUAGE_NONE][0]['value']) ? $vars['field_collection_item']->field_basic_content_block_type[LANGUAGE_NONE][0]['value'] : '';
+    $color = !empty($vars['field_collection_item']->field_basic_content_color_scheme[LANGUAGE_NONE][0]['value']) ? $vars['field_collection_item']->field_basic_content_color_scheme[LANGUAGE_NONE][0]['value'] : '';
+    $width = !empty($vars['field_collection_item']->field_basic_content_block_width[LANGUAGE_NONE][0]['value']) ? $vars['field_collection_item']->field_basic_content_block_width[LANGUAGE_NONE][0]['value'] : '';
+
+    //block type processing
+    if(!empty($type)) {
+      switch($vars['field_collection_item']->field_basic_content_block_type[LANGUAGE_NONE][0]['value']) {
+        case 'image':
+          $vars['classes_array'][] = 'full-block';
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_col1']);
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_col2']);
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_table']);
+          break;
+        case 'text':
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_image']);
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_col2']);
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_table']);
+          if(!empty($vars['content']['field_basic_content_block_col1'][0])) {
+            $vars['content']['field_basic_content_block_col1'][0]['#prefix'] = '<div class="col">';
+            $vars['content']['field_basic_content_block_col1'][0]['#suffix'] = '</div>';
+          }
+          break;
+        case 'columns2':
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_image']);
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_table']);
+
+          if(!empty($vars['content']['field_basic_content_block_col2'][0])) {
+            $vars['content']['field_basic_content_block_col2'][0]['#prefix'] = '<div class="col">';
+            $vars['content']['field_basic_content_block_col2'][0]['#suffix'] = '</div>';
+          }
+          if(!empty($vars['content']['field_basic_content_block_col1'][0])) {
+            $vars['content']['field_basic_content_block_col1'][0]['#prefix'] = '<div class="col">';
+            $vars['content']['field_basic_content_block_col1'][0]['#suffix'] = '</div>';
+          }
+
+          //remove class entity-field-collection-item
+          $vars['classes_array'] = array_filter($vars['classes_array'], function($v) {return $v !== 'entity-field-collection-item';});
+          break;
+        case 'text_table':
+          smo_basic_page_hide_field($vars['content']['field_basic_content_block_image']);
+          $vars['content']['#prefix'] = '<div class="col">';
+          $vars['content']['#suffix'] = '</div>';
+          break;
+      }
+    }
+
+    //block collor processing
+    if(!empty($color)) {
+      switch($vars['field_collection_item']->field_basic_content_color_scheme[LANGUAGE_NONE][0]['value']) {
+        case 'default':
+          break;
+        case 'grey':
+          $vars['classes_array'][] = 'b-with-bg';
+          $vars['classes_array'][] = 'style-gray';
+          break;
+        case 'purple':
+          $vars['classes_array'][] = 'b-with-bg';
+          $vars['classes_array'][] = 'style-purple';
+          break;
+        case 'blue':
+          $vars['classes_array'][] = 'b-with-bg';
+          $vars['classes_array'][] = 'style-blue';
+          break;
+      }
+    }
+
+    //block width processing
+    if(!empty($width) && $type !== 'image') {
+      if(($type == 'text') || ($type == 'text_table')) {
+        switch($width) {
+          case 'full-page':
+            $vars['classes_array'][] = 'full-block';
+            break;
+          case 'large':
+            $vars['inner_classes_array'][] = 'cols';
+            break;
+          case 'default':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-1';
+            $vars['inner_classes_array'][] = 'style-a';
+            break;
+          case 'small':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-1';
+            $vars['inner_classes_array'][] = 'style-b';
+            break;
+          case 'x-small':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-1';
+            break;
+        }
+      } elseif($type == 'columns2') {
+        switch($width) {
+          case 'full-page':
+            $vars['classes_array'][] = 'full-block';
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-2';
+            $vars['inner_classes_array'][] = 'style-b';
+            break;
+          case 'large':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-2';
+            $vars['inner_classes_array'][] = 'style-b';
+            break;
+          case 'default':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-2';
+            $vars['inner_classes_array'][] = 'style-a';
+            break;
+          case 'small':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-2';
+            break;
+          case 'x-small':
+            $vars['inner_classes_array'][] = 'cols';
+            $vars['inner_classes_array'][] = 'cols-2';
+            break;
+        }
+      }
+
+    }
+
+  }
+}
+
+/**
+ * Hide renderable field.
+ *
+ * @param $field Render array element.
+ */
+function smo_basic_page_hide_field(&$field) {
+  if(!empty($field)) {
+    $field['#access'] = FALSE;
+  }
+}

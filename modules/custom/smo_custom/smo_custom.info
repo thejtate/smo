@@ -1,0 +1,8 @@
+name = SMO custom
+description = SMO custom
+package = SMO
+core = 7.x
+version = 7.x-1.x
+
+;files[] =
+;dependencies[] =

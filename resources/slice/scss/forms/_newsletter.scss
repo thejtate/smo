@@ -1,0 +1,59 @@
+.form-newsletter {
+
+  .form-item, .form-actions {
+    margin: 0 0 13px;
+  }
+
+  h4 {
+    margin-bottom: 14px;
+  }
+
+  select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+    border-color: #fff;
+    padding: 10px 15px;
+  }
+
+  .select2-container {
+
+    .select2-selection--single {
+      height: 40px;
+    }
+  }
+
+  .select2-container--default {
+
+    .select2-selection--single {
+      background-color: $color-k;
+
+      .select2-selection__rendered {
+        line-height: 40px;
+        font-family: $klavikabasic-regular;
+      }
+    }
+  }
+
+  .form-type-radio, .form-type-checkbox {
+
+    @media (min-width: $bp-small) {
+      padding-top: 10px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+
+      &:checked + label:before {
+        @include oneline-sprite-box($icons, icon-checkbox-a);
+      }
+
+      & + label:before {
+        border: none;
+        @include oneline-sprite-box($icons, icon-checkbox);
+      }
+    }
+
+    label {
+      font-size: 14px;
+      font-family: $klavikabasic-bold;
+    }
+  }
+}

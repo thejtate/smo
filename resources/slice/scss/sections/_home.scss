@@ -1,0 +1,545 @@
+.section-home {
+  @include clear-box;
+  color: #fff;
+
+  .item {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+
+    &.style-long {
+
+      .inner {
+        padding-bottom: 37.01550387596899%;
+
+        @media (min-width: $bp-small) {
+          padding-bottom: 25%;
+        }
+
+        @media (min-width: $bp-middle) {
+          padding-bottom: 37.01550387596899%;
+        }
+      }
+
+      @media (max-width: 1560px) {
+
+        .valign {
+          padding-left: 5%;
+          padding-right: 5%;
+        }
+      }
+    }
+
+    &.style-big .inner {
+      padding-bottom: 74.03100775193798%;
+
+      @media (min-width: $bp-small) {
+        padding-bottom: 100%;
+      }
+
+      @media (min-width: $bp-middle) {
+        padding-bottom: 74.03100775193798%;
+      }
+    }
+
+    &.style-orange {
+      background: $color-e;
+    }
+
+    &.style-gray {
+      background: $color-f;
+    }
+
+    &.style-pink {
+      background: $color-g;
+    }
+
+    &.style-purple {
+      background: $color-h;
+    }
+
+    &:hover, .mobile &, .tablet & {
+
+      .item-header {
+        @include translate(0, 0);
+      }
+
+      .inner .item-content .img {
+        @include transform(scale(1.1));
+      }
+    }
+
+    a {
+      outline: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .valign {
+      position: relative;
+      top: 50%;
+      @include translate(0, -50%);
+      padding: 20px 5%;
+
+      @media (min-width: $bp-small) {
+        padding: 20px 8%;
+      }
+    }
+
+    .item-header {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 1;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 18px;
+      font-family: $klavikabasic-medium;
+      background: rgba(0, 0, 0, .5);
+      @include translate(0, 100%);
+      @include transition(transform 1s);
+
+      h2 {
+        bottom: 100%;
+        max-width: 100%;
+        position: absolute;
+        display: inline-block;
+        margin: 0;
+        font-size: 18px;
+        
+        @media (min-width: $bp-middle) and (max-width: 1250px) {
+          font-size: 14px;
+        }
+
+        a {
+          background: rgba(0, 0, 0, .5);
+        }
+      }
+
+      a {
+        display: block;
+        padding: 15px 18px;
+        color: #fff;
+        text-decoration: none;
+
+        @media (min-width: $bp-middle) and (max-width: $bp-large){
+          padding: 15px 10px;
+        }
+      }
+
+      .desc {
+        line-height: 1.4;
+        font-family: $klavikabasic-regular;
+        font-size: 14px;
+        text-transform: none;
+      }
+    }
+
+    .inner {
+      padding-bottom: 74.03100775193798%;
+      overflow: hidden;
+
+      @media (min-width: $bp-small) {
+        padding-bottom: 50%;
+      }
+
+      @media (min-width: $bp-middle) {
+        padding-bottom: 74.03100775193798%;
+      }
+
+      .item-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+
+        .img {
+          @include transition(transform 10.4s);
+          @include transform(scale(1));
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          @include background-size(cover);
+        }
+      }
+    }
+
+    .flexslider {
+      text-align: center;
+      font-family: $klavikabasic-medium;
+    }
+
+    .flex-direction-nav {
+      display: none;
+    }
+
+    .flex-control-nav {
+
+      ul, li {
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 5px;
+      }
+
+      a {
+        width: 12px;
+        height: 12px;
+        @include border-radius(50%);
+        border: 2px solid #fff;
+        background: transparent;
+        @include transition(background .3s);
+        display: block;
+        @include text-hide();
+
+        &.flex-active {
+          background: #fff;
+        }
+      }
+    }
+
+    .ico {
+      margin-bottom: 12px;
+
+      img {
+        width: auto;
+        display: inline;
+      }
+    }
+
+    .work-time {
+      text-transform: uppercase;
+      text-align: center;
+
+      @media (min-width: $bp-small) {
+        text-align: left;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+
+      .days {
+        display: inline-block;
+        min-width: 80px;
+        font-weight: bold;
+      }
+
+      .oh-display-hours {
+        font-weight: normal;
+      }
+
+    }
+
+    .btn-tickets {
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      font-size: 24px;
+      height: 100%;
+      text-align: center;
+      font-family: $klavikabasic-bold;
+      text-transform: uppercase;
+      @include backface-visibility(hidden);
+
+      a {
+        color: #fff;
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+
+        &:hover span {
+
+          &:before {
+            @include transform(translate(-50%, 0) scale(1.2) rotate(20deg));
+          }
+        }
+      }
+
+      span {
+        @include backface-visibility(hidden);
+        padding-top: 90px;
+        display: block;
+        position: relative;
+        @include transition(padding-top .4s);
+
+        &:before {
+          position: absolute;
+          left: 50%;
+          top: 20%;
+          font-size: 46px;
+          @include translate(-50%, 0);
+          @include transition(transform .4s);
+        }
+      }
+    }
+  }
+
+  .form-wrapper, .events {
+
+    @media (min-width: $bp-middle) {
+      max-height: 648.11px;
+    }
+
+    .inner {
+      padding-bottom: 0;
+
+      @media (min-width: $bp-small) {
+        padding-bottom: 74.03100775193798%;
+      }
+
+      @media (min-width: $bp-middle) {
+        padding-bottom: 101.03100775193798%;
+      }
+    }
+
+    &.style-long {
+
+      @media (min-width: $bp-middle) {
+        max-height: 410.66px;
+      }
+
+      .inner {
+        padding-bottom: 0;
+
+        @media (min-width: $bp-small) {
+          padding-bottom: 25%;
+        }
+
+        @media (min-width: $bp-middle) {
+          padding-bottom: 64.01550387596899%;
+        }
+      }
+    }
+
+    .item-content {
+      position: static !important;
+
+      @media (min-width: $bp-small) {
+        position: absolute !important;
+      }
+    }
+
+    .valign {
+      @include translate(0, 0);
+
+      @media (min-width: $bp-small) {
+        @include translate(0, -50%);
+      }
+    }
+  }
+
+  .events {
+
+    .item-hd {
+      @include clearfix();
+      margin-bottom: 20px;
+
+      @media (min-width: $bp-small) {
+        margin-bottom: 30px;
+      }
+    }
+
+    .btn {
+      margin-bottom: 20px;
+
+      @media (min-width: $bp-small) {
+        float: right;
+        margin-bottom: 0;
+      }
+    }
+
+    .subtitle {
+      font-style: italic;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .show-events .item-row {
+      opacity: 1;
+    }
+
+    .item-row {
+      opacity: 0;
+      padding: 12px 4%;
+      position: relative;
+      @include clearfix();
+      @include transition(opacity .3s);
+
+      &:before {
+        @include pseudo-block($left: 0, $right: 0, $top: 0);
+        border-top: 2px solid #2ea7dd;
+      }
+
+      &:nth-child(1) {
+        @include transition-delay(.1s);
+      }
+
+      &:nth-child(2) {
+        @include transition-delay(.2s);
+      }
+
+      &:nth-child(3) {
+        @include transition-delay(.3s);
+      }
+
+      &:nth-child(4) {
+        @include transition-delay(.4s);
+      }
+
+      &:nth-child(5) {
+        @include transition-delay(.5s);
+      }
+
+      &:nth-child(6) {
+        @include transition-delay(.6s);
+      }
+
+      &:nth-child(7) {
+        @include transition-delay(.7s);
+      }
+
+      &:nth-child(8) {
+        @include transition-delay(.8s);
+      }
+
+      &:nth-child(9) {
+        @include transition-delay(.9s);
+      }
+
+      &:nth-child(10) {
+        @include transition-delay(1s);
+      }
+
+      &:nth-child(11) {
+        @include transition-delay(1.1s);
+      }
+
+      &:nth-child(12) {
+        @include transition-delay(1.2s);
+      }
+
+      &:nth-child(13) {
+        @include transition-delay(1.3s);
+      }
+
+      &:nth-child(14) {
+        @include transition-delay(1.4s);
+      }
+
+      &:nth-child(15) {
+        @include transition-delay(1.5s);
+      }
+
+      &:nth-child(16) {
+        @include transition-delay(1.6s);
+      }
+
+      &:nth-child(17) {
+        @include transition-delay(1.7s);
+      }
+
+      &:nth-child(18) {
+        @include transition-delay(1.8s);
+      }
+
+      &:nth-child(19) {
+        @include transition-delay(1.9s);
+      }
+
+      &:nth-child(20) {
+        @include transition-delay(2s);
+      }
+
+      &:nth-child(21) {
+        @include transition-delay(2.1s);
+      }
+
+      &:nth-child(22) {
+        @include transition-delay(2.2s);
+      }
+
+      &:nth-child(23) {
+        @include transition-delay(2.3s);
+      }
+
+      &:nth-child(24) {
+        @include transition-delay(2.4s);
+      }
+
+      &:nth-child(25) {
+        @include transition-delay(2.5s);
+      }
+
+      a {
+        text-decoration: none;
+        color: #fff;
+        @include transition(color .3s);
+
+        &:hover {
+          color: $color-b;
+        }
+      }
+    }
+
+    .text {
+      overflow: hidden;
+    }
+
+    .desc, .tag {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .time {
+      font-style: italic;
+      width: 80px;
+      float: left;
+    }
+
+    .desc {
+      margin-right: 10px;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .tag {
+      color: #fff;
+      font-family: $klavikabasic-bold;
+      background: $color-m;
+      display: inline-block;
+      vertical-align: middle;
+      @include border-radius(5px);
+      @include transition(background .4s);
+
+      &:hover {
+        background: $color-b;
+      }
+
+      a, span {
+        display: block;
+        color: #fff;
+        padding: 0 10px 2px;
+        text-decoration: none;
+      }
+    }
+  }
+}
